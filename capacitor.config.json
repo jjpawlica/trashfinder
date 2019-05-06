@@ -1,0 +1,7 @@
+{
+  "appId": "com.trashfinder.app",
+  "appName": "trashfinder",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
