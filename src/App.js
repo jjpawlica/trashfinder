@@ -2,17 +2,9 @@
 
 import React from 'react';
 
-import {
-  IonApp,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-  IonMenuButton,
-  IonTitle,
-  IonSplitPane
-} from '@ionic/react';
-import Menu from './components/Menu';
+import { IonApp } from '@ionic/react';
+
+import Main from './pages/Main';
 
 import '@ionic/core/css/core.css';
 import '@ionic/core/css/ionic.bundle.css';
@@ -20,19 +12,7 @@ import '@ionic/core/css/ionic.bundle.css';
 const App = () => {
   return (
     <IonApp>
-      <IonSplitPane contentId="main">
-        <Menu />
-        <IonPage id="main">
-          <IonHeader>
-            <IonToolbar>
-              <IonButtons slot="start">
-                <IonMenuButton />
-              </IonButtons>
-              <IonTitle>Signup</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-        </IonPage>
-      </IonSplitPane>
+      <Main />
     </IonApp>
   );
 };
