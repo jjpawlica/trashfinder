@@ -4,7 +4,7 @@ import React from 'react';
 
 import { IonApp } from '@ionic/react';
 
-import Main from './pages/Main';
+import Start from './pages/Start';
 
 import '@ionic/core/css/core.css';
 import '@ionic/core/css/ionic.bundle.css';
@@ -12,7 +12,7 @@ import '@ionic/core/css/ionic.bundle.css';
 const App = () => {
   return (
     <IonApp>
-      <Main />
+      <Start />
     </IonApp>
   );
 };
