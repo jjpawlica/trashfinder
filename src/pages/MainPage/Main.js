@@ -12,7 +12,7 @@ import {
   IonSplitPane
 } from '@ionic/react';
 
-import Menu from '../components/Menu';
+import Menu from '../../components/Navigation/Menu';
 
 const Main = () => {
   return (

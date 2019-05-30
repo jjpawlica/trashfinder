@@ -4,9 +4,9 @@ import React from 'react';
 
 import { IonContent, IonGrid, IonIcon, IonText, IonButton, IonRow, IonCol } from '@ionic/react';
 
-import './Start.css';
+import './LandingPage.css';
 
-const Start = () => {
+const LandingPage = () => {
   return (
     <IonContent fullscreen scroll-y="false">
       <IonGrid fixed className="content-wrapper">
@@ -40,4 +40,4 @@ const Start = () => {
   );
 };
 
-export default Start;
+export default LandingPage;
