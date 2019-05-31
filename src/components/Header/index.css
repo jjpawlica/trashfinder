@@ -1,0 +1,21 @@
+.center-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+.mini-logo {
+  padding-top: 4px;
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+}
+
+IonRow {
+  margin-bottom: 64px;
+}

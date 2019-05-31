@@ -4,9 +4,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: space-around;
-  box-sizing: content-box;
+  justify-content: space-between;
 }
 
 .center-column {
@@ -19,7 +17,21 @@
   text-align: center;
 }
 
+.input-size {
+  width: 75%;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+.main-text {
+  margin-bottom: 32px;
+}
+
 .logo {
-  width: 140px;
-  height: 140px;
+  margin-top: 192px;
+  width: 156px;
+  height: 156px;
 }
