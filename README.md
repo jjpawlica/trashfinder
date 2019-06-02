@@ -1,8 +1,9 @@
 # trashfinder
 
-## Project page
+## Links
 
-[![Link to project page]](https://bai-uek.github.io/trashfinder/)
+- [Project page](https://bai-uek.github.io/trashfinder/)
+- [Trello boards](https://trello.com/bogateaplikacjeinternetowe2)
 
 ## Available Scripts
 
