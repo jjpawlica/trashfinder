@@ -1,5 +1,9 @@
 # trashfinder
 
+## Project page
+
+[![Link to project page]](https://bai-uek.github.io/trashfinder/)
+
 ## Available Scripts
 
 In the project directory, you can run:
