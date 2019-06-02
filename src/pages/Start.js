@@ -19,8 +19,8 @@ const Start = () => {
           </IonCol>
         </IonRow>
         <IonRow align-items-stretch>
-          <IonCol className="center-column">
-            <h1>Zgłaszaj zanieczyszczone miejsca, sprzataj zgłoszone, oceniaj.</h1>
+          <IonCol className="center-column center-text">
+            <h1>Pomóż posprzątać<br />swoją okolicę!</h1>
           </IonCol>
         </IonRow>
         <IonRow align-items-stretch>
@@ -34,18 +34,19 @@ const Start = () => {
           </IonCol>
         </IonRow> */}
         <IonRow align-items-stretch>
-          <IonCol className="center-column">
-            <IonText className="center-text">
-              Lorem ipsum dolor amet messenger bag tilde tote bag authentic prism. Narwhal plaid
-              snackwave umami activated charcoal kitsch put a bird on it literally flannel.
-            </IonText>
-          </IonCol>
-        </IonRow>
-        <IonRow align-items-stretch>
           <IonCol>
             <IonButton expand="block">Logowanie</IonButton>
             <IonButton expand="block">Rejestracja przez email</IonButton>
             <IonButton expand="block">Rejestracja przez Google</IonButton>
+          </IonCol>
+        </IonRow>
+        <IonRow align-items-stretch>
+          <IonCol className="center-column">
+            <IonText className="small-text center-text">
+              &copy; Jakub Pawlica, Agnieszka Chlebda, Michał Kowalik, Dawid Łysiak
+              <br />
+              Aplikacja została stworzona jako praca zaliczenowa na przedmiot "Bogate Aplikacje Internetowe".
+            </IonText>
           </IonCol>
         </IonRow>
       </IonGrid>

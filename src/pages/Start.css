@@ -7,6 +7,8 @@
   align-items: stretch;
   justify-content: space-around;
   box-sizing: content-box;
+  background: #cbdcdd;
+  padding: 0;
 }
 
 .center-column {
@@ -22,4 +24,8 @@
 .logo {
   width: 140px;
   height: 140px;
+}
+
+.small-text {
+  font-size: 12px;
 }
