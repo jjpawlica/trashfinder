@@ -1,16 +1,18 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { IonMenu, IonItem, IonContent, IonMenuToggle } from '@ionic/react';
 
-import { IonMenu, IonHeader, IonToolbar, IonTitle } from '@ionic/react';
+const Menu = ({ history }) => (
+  <IonMenu contentId="main">
+    <IonContent>
+      <IonMenuToggle>
+        <IonItem onClick={() => history.push('/')}>Home</IonItem>
+      </IonMenuToggle>
+      <IonMenuToggle>
+        <IonItem onClick={() => history.push('/main')}>Main</IonItem>
+      </IonMenuToggle>
+    </IonContent>
+  </IonMenu>
+);
 
-const Menu = () => {
-  return (
-    <IonMenu contentId="main">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-    </IonMenu>
-  );
-};
-export default Menu;
+export default withRouter(Menu);

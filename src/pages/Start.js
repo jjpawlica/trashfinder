@@ -2,7 +2,15 @@
 
 import React from 'react';
 
-import { IonContent, IonGrid, IonIcon, IonText, IonButton, IonRow, IonCol } from '@ionic/react';
+import {
+  IonContent,
+  IonGrid,
+  // IonIcon,
+  IonText,
+  IonButton,
+  IonRow,
+  IonCol
+} from '@ionic/react';
 
 import './Start.css';
 
@@ -35,7 +43,7 @@ const Start = () => {
         </IonRow> */}
         <IonRow align-items-stretch>
           <IonCol>
-            <IonButton expand="block">Logowanie</IonButton>
+            <IonButton href="/main" expand="block">Logowanie</IonButton>
             <IonButton expand="block">Rejestracja przez email</IonButton>
             <IonButton expand="block">Rejestracja przez Google</IonButton>
           </IonCol>
