@@ -1,0 +1,55 @@
+.content-wrapper {
+  background: #cbdcdd;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.center-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.input-size {
+  width: 75%;
+}
+
+.app-logo {
+  display: block;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  height: auto;
+}
+
+form {
+  height: 100%;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+.main-text {
+  margin-bottom: 32px;
+}
+
+.logo {
+  margin-top: 192px;
+  width: 156px;
+  height: 156px;
+}
+
+.small-text {
+  font-size: 12px;
+}

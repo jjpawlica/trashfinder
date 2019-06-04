@@ -1,0 +1,23 @@
+.center-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-logo {
+  display: block;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  height: auto;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}
+
+IonRow {
+  margin-bottom: 64px;
+}
