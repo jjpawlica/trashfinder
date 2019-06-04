@@ -66,7 +66,7 @@ const LoginPage = () => {
             <IonCol className="center-text">
               <IonText>Don&apos;t have account? </IonText>
               <Link to={ROUTES.SIGN_UP_EMAIL}>
-                <IonText color="primary">Sing Up</IonText>
+                <IonText color="primary">Sign Up</IonText>
               </Link>
             </IonCol>
           </IonRow>

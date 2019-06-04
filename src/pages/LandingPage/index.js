@@ -3,11 +3,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { IonContent, IonGrid, IonIcon, IonText, IonButton, IonRow, IonCol } from '@ionic/react';
+import { IonContent, IonGrid, IonText, IonButton, IonRow, IonCol } from '@ionic/react';
 
 import * as ROUTES from '../../constants/routes';
 
 import '../index.css';
+
+import logo from '../../images/logo.svg';
+
+import startImage from '../../images/start-image.svg';
 
 const LandingPage = () => {
   return (
@@ -15,16 +19,21 @@ const LandingPage = () => {
       <IonGrid fixed className="content-wrapper">
         <IonRow>
           <IonCol className="center-column" size="12">
-            <IonIcon name="leaf" className="logo" color="success" />
+            <img src={logo} alt="Logo" className="app-logo" />
           </IonCol>
-          <IonCol className="center-column" size="12">
-            <h1 className="main-text">Trashfinder</h1>
-          </IonCol>
+        </IonRow>
+        <IonRow>
           <IonCol className="center-column" size="12">
             <IonText className="center-text">
-              Lorem ipsum dolor amet messenger bag tilde tote bag authentic prism. Narwhal plaid
-              snackwave umami activated charcoal kitsch put a bird on it literally flannel.
+              <h1>
+                Pomóż posprzątać
+                <br />
+                swoją okolicę!
+              </h1>
             </IonText>
+          </IonCol>
+          <IonCol className="center-column" size="12">
+            <img src={startImage} className="App-logo" alt="Start" />
           </IonCol>
         </IonRow>
         <IonRow>
@@ -38,6 +47,12 @@ const LandingPage = () => {
             <Link to={ROUTES.SIGN_UP_GOOGLE}>
               <IonButton expand="block">Sing up with Google</IonButton>
             </Link>
+          </IonCol>
+          <IonCol className="center-column" size="12">
+            <IonText className="small-text center-text">
+              &copy; Jakub Pawlica, Agnieszka Chlebda, Michał Kowalik, Dawid Łysiak <br /> Aplikacja
+              została stworzona jako praca zaliczenowa na przedmiot Bogate Aplikacje Internetowe.
+            </IonText>
           </IonCol>
         </IonRow>
       </IonGrid>
