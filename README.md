@@ -1,5 +1,10 @@
 # trashfinder
 
+## Links
+
+- [Project page](https://bai-uek.github.io/trashfinder/)
+- [Trello boards](https://trello.com/bogateaplikacjeinternetowe2)
+
 ## Available Scripts
 
 In the project directory, you can run:
