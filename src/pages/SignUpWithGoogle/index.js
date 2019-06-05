@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react';
 import { IonContent, IonGrid, IonRow, IonCol, IonText, IonButton } from '@ionic/react';
 
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
@@ -21,7 +20,7 @@ const SignupPageWithGoogle = ({ history }) => {
     event.preventDefault();
     try {
       await firebase.auth.signInWithPopup(firebase.googleProvider);
-      history.push(ROUTES.LANDING);
+      history.push(ROUTES.MAIN);
     } catch (err) {
       setError(err.message);
     }
@@ -39,18 +38,19 @@ const SignupPageWithGoogle = ({ history }) => {
               </h1>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.MAIN}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Go to App
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.MAIN)}
+              >
+                Go to App
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     );
-    // Change later to redirect to main app stack
-    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
@@ -77,9 +77,9 @@ const SignupPageWithGoogle = ({ history }) => {
             <IonText>
               <p className="text-center">
                 Do you already have account?{' '}
-                <Link to={ROUTES.LOG_IN}>
-                  <IonText color="primary">Log in</IonText>
-                </Link>
+                <IonText color="primary" onClick={() => history.push(ROUTES.SIGN_UP_EMAIL)}>
+                  Log in
+                </IonText>
               </p>
             </IonText>
           </IonCol>

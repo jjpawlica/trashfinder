@@ -12,8 +12,7 @@ import {
   IonButton
 } from '@ionic/react';
 
-import { withRouter, Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
@@ -42,7 +41,7 @@ const LoginPage = ({ history }) => {
     event.preventDefault();
     try {
       await firebase.auth.signInWithEmailAndPassword(email, password);
-      history.push(ROUTES.LANDING);
+      history.push(ROUTES.MAIN);
     } catch (err) {
       setError(err.message);
     }
@@ -60,18 +59,19 @@ const LoginPage = ({ history }) => {
               </h1>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.MAIN}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Go to App
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.MAIN)}
+              >
+                Go to App
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     );
-    // Change later to redirect to main app stack
-    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
@@ -125,11 +125,14 @@ const LoginPage = ({ history }) => {
               </IonButton>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.PASSWORD_FORGET}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Forgot Password?
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.PASSWORD_FORGET)}
+              >
+                Forgot Password?
+              </IonButton>
             </IonCol>
           </IonRow>
           <IonRow justify-content-center>
@@ -137,9 +140,9 @@ const LoginPage = ({ history }) => {
               <IonText>
                 <p className="text-center">
                   Don&apos;t have account?{' '}
-                  <Link to={ROUTES.SIGN_UP_EMAIL}>
-                    <IonText color="primary">Sign Up</IonText>
-                  </Link>
+                  <IonText color="primary" onClick={() => history.push(ROUTES.SIGN_UP_EMAIL)}>
+                    Sign Up
+                  </IonText>
                 </p>
               </IonText>
             </IonCol>

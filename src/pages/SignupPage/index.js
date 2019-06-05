@@ -13,7 +13,6 @@ import {
 } from '@ionic/react';
 
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
@@ -43,7 +42,7 @@ const SignupPage = ({ history }) => {
     event.preventDefault();
     try {
       await firebase.auth.createUserWithEmailAndPassword(email, passwordOne);
-      history.push(ROUTES.LANDING);
+      history.push(ROUTES.MAIN);
     } catch (err) {
       setError(err.message);
     }
@@ -61,18 +60,19 @@ const SignupPage = ({ history }) => {
               </h1>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.MAIN}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Go to App
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.MAIN)}
+              >
+                Go to App
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     );
-    // Change later to redirect to main app stack
-    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
@@ -145,9 +145,9 @@ const SignupPage = ({ history }) => {
               <IonText>
                 <p className="text-center">
                   Do you already have account?{' '}
-                  <Link to={ROUTES.LOG_IN}>
-                    <IonText color="primary">Log in</IonText>
-                  </Link>
+                  <IonText color="primary" onClick={() => history.push(ROUTES.LOG_IN)}>
+                    Log in
+                  </IonText>
                 </p>
               </IonText>
             </IonCol>

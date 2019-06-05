@@ -1,7 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { IonContent, IonGrid, IonText, IonButton, IonRow, IonCol } from '@ionic/react';
 
@@ -11,7 +10,7 @@ import logo from '../../images/logo.svg';
 
 import startImage from '../../images/start-image.svg';
 
-const LandingPage = () => {
+const LandingPage = ({ history }) => {
   return (
     <IonContent fullscreen>
       <IonGrid fixed>
@@ -36,15 +35,15 @@ const LandingPage = () => {
         </IonRow>
         <IonRow justify-content-center>
           <IonCol size="10">
-            <Link to={ROUTES.LOG_IN}>
-              <IonButton expand="block">Log In</IonButton>
-            </Link>
-            <Link to={ROUTES.SIGN_UP_EMAIL}>
-              <IonButton expand="block">Sign Up with Email</IonButton>
-            </Link>
-            <Link to={ROUTES.SIGN_UP_GOOGLE}>
-              <IonButton expand="block">Sing up with Google</IonButton>
-            </Link>
+            <IonButton expand="block" onClick={() => history.push(ROUTES.LOG_IN)}>
+              Log In
+            </IonButton>
+            <IonButton expand="block" onClick={() => history.push(ROUTES.SIGN_UP_EMAIL)}>
+              Sign Up with Email
+            </IonButton>
+            <IonButton expand="block" onClick={() => history.push(ROUTES.SIGN_UP_GOOGLE)}>
+              Sing up with Google
+            </IonButton>
           </IonCol>
           <IonCol size="12">
             <IonText>
@@ -61,4 +60,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default withRouter(LandingPage);

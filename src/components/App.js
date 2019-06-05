@@ -4,8 +4,17 @@
 import React, { useContext } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { IonApp, IonPage, IonContent, IonGrid, IonRow, IonCol, IonSpinner } from '@ionic/react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {
+  IonApp,
+  IonPage,
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonSpinner,
+  IonRouterOutlet
+} from '@ionic/react';
 
 import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
@@ -51,20 +60,18 @@ const App = () => {
   return (
     <UserContext.Provider value={{ user, initialising, error }}>
       <Router>
-        <div id="app">
-          <IonApp>
-            <IonPage id="main">
-              <Switch>
-                <Route exact path={ROUTES.LANDING} component={LandingPage} />
-                <Route path={ROUTES.LOG_IN} component={LoginPage} />
-                <Route path={ROUTES.SIGN_UP_EMAIL} component={SignupPage} />
-                <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
-                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-                <Route path={ROUTES.MAIN} component={MainPage} />
-              </Switch>
-            </IonPage>
-          </IonApp>
-        </div>
+        <IonApp>
+          <IonPage>
+            <IonRouterOutlet>
+              <Route exact path={ROUTES.LANDING} component={LandingPage} />
+              <Route path={ROUTES.LOG_IN} component={LoginPage} />
+              <Route path={ROUTES.SIGN_UP_EMAIL} component={SignupPage} />
+              <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
+              <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+              <Route path={ROUTES.MAIN} component={MainPage} />
+            </IonRouterOutlet>
+          </IonPage>
+        </IonApp>
       </Router>
     </UserContext.Provider>
   );
