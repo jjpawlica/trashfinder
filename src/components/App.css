@@ -1,0 +1,33 @@
+:root {
+  --ion-background-color: #cbdcdd;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-small {
+  font-size: 12px;
+}
+
+.text-bottom-margin {
+  margin-bottom: 32px;
+}
+
+.app-logo {
+  display: block;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: auto;
+}
+
+form {
+  height: 100%;
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+}

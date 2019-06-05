@@ -7,8 +7,6 @@ import { IonContent, IonGrid, IonText, IonButton, IonRow, IonCol } from '@ionic/
 
 import * as ROUTES from '../../constants/routes';
 
-import '../index.css';
-
 import logo from '../../images/logo.svg';
 
 import startImage from '../../images/start-image.svg';
@@ -16,23 +14,23 @@ import startImage from '../../images/start-image.svg';
 const LandingPage = () => {
   return (
     <IonContent fullscreen scroll-y="false">
-      <IonGrid fixed className="content-wrapper">
+      <IonGrid>
         <IonRow>
-          <IonCol className="center-column" size="12">
+          <IonCol size="12">
             <img src={logo} alt="Logo" className="app-logo" />
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonCol className="center-column" size="12">
-            <IonText className="center-text">
-              <h1>
+          <IonCol size="12">
+            <IonText>
+              <h1 className="text-center">
                 Pomóż posprzątać
                 <br />
                 swoją okolicę!
               </h1>
             </IonText>
           </IonCol>
-          <IonCol className="center-column" size="12">
+          <IonCol size="12">
             <img src={startImage} className="App-logo" alt="Start" />
           </IonCol>
         </IonRow>
@@ -48,10 +46,13 @@ const LandingPage = () => {
               <IonButton expand="block">Sing up with Google</IonButton>
             </Link>
           </IonCol>
-          <IonCol className="center-column" size="12">
-            <IonText className="small-text center-text">
-              &copy; Jakub Pawlica, Agnieszka Chlebda, Michał Kowalik, Dawid Łysiak <br /> Aplikacja
-              została stworzona jako praca zaliczenowa na przedmiot Bogate Aplikacje Internetowe.
+          <IonCol size="12">
+            <IonText>
+              <p className="text-center text-small">
+                &copy; Jakub Pawlica, Agnieszka Chlebda, Michał Kowalik, Dawid Łysiak <br />{' '}
+                Aplikacja została stworzona jako praca zaliczenowa na przedmiot Bogate Aplikacje
+                Internetowe.
+              </p>
             </IonText>
           </IonCol>
         </IonRow>
