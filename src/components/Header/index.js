@@ -5,13 +5,12 @@ import { IonCol, IonRow } from '@ionic/react';
 
 import * as ROUTES from '../../constants/routes';
 
-import './index.css';
 import logo from '../../images/logo.svg';
 
 const Header = () => {
   return (
-    <IonRow>
-      <IonCol className="center-column" size="12">
+    <IonRow justify-content-center>
+      <IonCol size="12">
         <Link to={ROUTES.LANDING}>
           <img src={logo} alt="Logo" className="app-logo" />
         </Link>

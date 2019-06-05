@@ -14,7 +14,7 @@ import startImage from '../../images/start-image.svg';
 const LandingPage = () => {
   return (
     <IonContent fullscreen>
-      <IonGrid>
+      <IonGrid fixed>
         <IonRow>
           <IonCol size="12">
             <img src={logo} alt="Logo" className="app-logo" />
@@ -34,8 +34,8 @@ const LandingPage = () => {
             <img src={startImage} className="App-logo" alt="Start" />
           </IonCol>
         </IonRow>
-        <IonRow>
-          <IonCol size="12">
+        <IonRow justify-content-center>
+          <IonCol size="10">
             <Link to={ROUTES.LOG_IN}>
               <IonButton expand="block">Log In</IonButton>
             </Link>
