@@ -35,13 +35,13 @@ const SignupPageWithGoogle = ({ history }) => {
           <IonRow justify-content-center>
             <IonCol size="12">
               <h1 style={{ marginTop: '20vh' }} className="text-margin-bottom text-center">
-                You are already logged in
+                Jesteś już zalogowany
               </h1>
             </IonCol>
             <IonCol size="12">
               <Link to={ROUTES.MAIN}>
                 <IonButton expand="block" fill="clear" color="primary">
-                  Go to App
+                  Przejdź do aplikacji
                 </IonButton>
               </Link>
             </IonCol>
@@ -59,7 +59,7 @@ const SignupPageWithGoogle = ({ history }) => {
         <Header />
         <IonRow justify-content-center>
           <IonCol size="12">
-            <h1 className="text-bottom-margin text-center">Sign Up with Google</h1>
+            <h1 className="text-bottom-margin text-center">Rejestracja przez Google</h1>
             {error && (
               <IonText color="danger">
                 <p className="text-center">{error}</p>
@@ -68,7 +68,7 @@ const SignupPageWithGoogle = ({ history }) => {
           </IonCol>
           <IonCol size="10">
             <IonButton expand="block" color="primary" onClick={handleSignup}>
-              CREAT ACCOUNT
+              UTWÓRZ KONTO
             </IonButton>
           </IonCol>
         </IonRow>
@@ -76,9 +76,9 @@ const SignupPageWithGoogle = ({ history }) => {
           <IonCol size="10">
             <IonText>
               <p className="text-center">
-                Do you already have account?{' '}
+                Czy posiadasz już konto?{' '}
                 <Link to={ROUTES.LOG_IN}>
-                  <IonText color="primary">Log in</IonText>
+                  <IonText color="primary">Zaloguj</IonText>
                 </Link>
               </p>
             </IonText>

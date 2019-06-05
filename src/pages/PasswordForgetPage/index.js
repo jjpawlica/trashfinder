@@ -55,13 +55,13 @@ const PasswordForgetPage = ({ history }) => {
           <IonRow justify-content-center>
             <IonCol size="12">
               <h1 style={{ marginTop: '20vh' }} className="text-margin-bottom text-center">
-                You are already logged in
+                Jesteś już zalogowany
               </h1>
             </IonCol>
             <IonCol size="12">
               <Link to={ROUTES.MAIN}>
                 <IonButton expand="block" fill="clear" color="primary">
-                  Go to App
+                  Przejdź do aplikacji
                 </IonButton>
               </Link>
             </IonCol>
@@ -79,7 +79,7 @@ const PasswordForgetPage = ({ history }) => {
         <Header />
         <IonRow justify-content-center>
           <IonCol size="12">
-            <h1 className="text-center text-bottom-margin">Forgot Password?</h1>
+            <h1 className="text-center text-bottom-margin">Zapomniałeś hasła?</h1>
             {error && (
               <IonText color="danger">
                 <p className="text-center">{error}</p>
@@ -108,7 +108,7 @@ const PasswordForgetPage = ({ history }) => {
               disabled={invalid}
               onClick={handlePasswordReset}
             >
-              RESET PASSWORD
+              RESET HASŁA
             </IonButton>
           </IonCol>
         </IonRow>
@@ -116,9 +116,9 @@ const PasswordForgetPage = ({ history }) => {
           <IonCol size="12">
             <IonText>
               <p className="text-center">
-                Don&apos;t have account?{' '}
+                Nie masz konta?{' '}
                 <Link to={ROUTES.SIGN_UP_EMAIL}>
-                  <IonText color="primary">Sign Up</IonText>
+                  <IonText color="primary">Zarejestruj</IonText>
                 </Link>
               </p>{' '}
             </IonText>

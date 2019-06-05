@@ -56,13 +56,13 @@ const LoginPage = ({ history }) => {
           <IonRow justify-content-center>
             <IonCol size="12">
               <h1 style={{ marginTop: '20vh' }} className="text-margin-bottom text-center">
-                You are already logged in
+                Jesteś już zalogowany
               </h1>
             </IonCol>
             <IonCol size="12">
               <Link to={ROUTES.MAIN}>
                 <IonButton expand="block" fill="clear" color="primary">
-                  Go to App
+                  Przejdź do aplikacji
                 </IonButton>
               </Link>
             </IonCol>
@@ -81,7 +81,7 @@ const LoginPage = ({ history }) => {
           <Header />
           <IonRow justify-content-center>
             <IonCol size="12">
-              <h1 className="text-margin-bottom text-center">Log In</h1>
+              <h1 className="text-margin-bottom text-center">Zaloguj</h1>
               {error && (
                 <IonText color="danger">
                   <p className="text-center">{error}</p>
@@ -107,7 +107,7 @@ const LoginPage = ({ history }) => {
             <IonCol size="10">
               <IonItem>
                 <IonLabel position="floating" color="primary">
-                  Password
+                  Hasło
                 </IonLabel>
                 <IonInput
                   required
@@ -121,13 +121,13 @@ const LoginPage = ({ history }) => {
             </IonCol>
             <IonCol size="10">
               <IonButton expand="block" color="primary" type="submit" disabled={invalid}>
-                LOG IN
+                ZALOGUJ
               </IonButton>
             </IonCol>
             <IonCol size="12">
               <Link to={ROUTES.PASSWORD_FORGET}>
                 <IonButton expand="block" fill="clear" color="primary">
-                  Forgot Password?
+                  Zapomniałeś hasła?
                 </IonButton>
               </Link>
             </IonCol>
@@ -136,7 +136,7 @@ const LoginPage = ({ history }) => {
             <IonCol>
               <IonText>
                 <p className="text-center">
-                  Don&apos;t have account?{' '}
+                  Nie masz konta?{' '}
                   <Link to={ROUTES.SIGN_UP_EMAIL}>
                     <IonText color="primary">Sign Up</IonText>
                   </Link>

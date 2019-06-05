@@ -57,13 +57,13 @@ const SignupPage = ({ history }) => {
           <IonRow justify-content-center>
             <IonCol size="12">
               <h1 style={{ marginTop: '20vh' }} className="text-margin-bottom text-center">
-                You are already logged in
+                Jesteś już zalogowany
               </h1>
             </IonCol>
             <IonCol size="12">
               <Link to={ROUTES.MAIN}>
                 <IonButton expand="block" fill="clear" color="primary">
-                  Go to App
+                  Przejdź do aplikacji
                 </IonButton>
               </Link>
             </IonCol>
@@ -107,11 +107,11 @@ const SignupPage = ({ history }) => {
             <IonCol size="10">
               <IonItem>
                 <IonLabel position="floating" color="primary">
-                  Password
+                  Hasło
                 </IonLabel>
                 <IonInput
                   required
-                  placeholder="Eneter Password"
+                  placeholder="Hasło"
                   type="password"
                   name="password"
                   value={passwordOne}
@@ -122,11 +122,11 @@ const SignupPage = ({ history }) => {
             <IonCol size="10">
               <IonItem>
                 <IonLabel position="floating" color="primary">
-                  Confirm Password
+                  Potwierdź hasło
                 </IonLabel>
                 <IonInput
                   required
-                  placeholder="Confirm Password"
+                  placeholder="Potwierdź hasło"
                   type="password"
                   name="confirm"
                   value={passwordTwo}
@@ -136,7 +136,7 @@ const SignupPage = ({ history }) => {
             </IonCol>
             <IonCol size="10">
               <IonButton expand="block" color="primary" type="submit" disabled={invalid}>
-                SIGN UP
+                ZALOGUJ
               </IonButton>
             </IonCol>
           </IonRow>
@@ -144,9 +144,9 @@ const SignupPage = ({ history }) => {
             <IonCol size="12">
               <IonText>
                 <p className="text-center">
-                  Do you already have account?{' '}
+                  Czy posiadasz już kontot?{' '}
                   <Link to={ROUTES.LOG_IN}>
-                    <IonText color="primary">Log in</IonText>
+                    <IonText color="primary">Zaloguj</IonText>
                   </Link>
                 </p>
               </IonText>

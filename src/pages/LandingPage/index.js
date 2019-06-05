@@ -37,13 +37,13 @@ const LandingPage = () => {
         <IonRow justify-content-center>
           <IonCol size="10">
             <Link to={ROUTES.LOG_IN}>
-              <IonButton expand="block">Log In</IonButton>
+              <IonButton expand="block">Zaloguj</IonButton>
             </Link>
             <Link to={ROUTES.SIGN_UP_EMAIL}>
-              <IonButton expand="block">Sign Up with Email</IonButton>
+              <IonButton expand="block">Rejestracja przez Email</IonButton>
             </Link>
             <Link to={ROUTES.SIGN_UP_GOOGLE}>
-              <IonButton expand="block">Sing up with Google</IonButton>
+              <IonButton expand="block">Rejestracja przez Google</IonButton>
             </Link>
           </IonCol>
           <IonCol size="12">
