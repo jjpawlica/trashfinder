@@ -6,3 +6,5 @@ export const LOG_IN = '/login';
 export const PASSWORD_FORGET = '/forget';
 
 export const MAIN = '/main';
+
+export const PROFILE = '/profile';
