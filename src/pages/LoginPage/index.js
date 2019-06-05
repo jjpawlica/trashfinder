@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
   IonContent,
   IonGrid,
@@ -25,8 +25,6 @@ import FirebaseContext from '../../components/Firebase/context';
 const LoginPage = ({ history }) => {
   const firebase = useContext(FirebaseContext);
 
-  const user = firebase.auth.currentUser;
-
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
@@ -34,8 +32,8 @@ const LoginPage = ({ history }) => {
       try {
         await firebase.auth.signInWithEmailAndPassword(email.value, password.value);
         history.push(ROUTES.MAIN);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,7 +41,7 @@ const LoginPage = ({ history }) => {
   );
 
   // If user then redirect to main app
-  // if (user) {
+  // if (firebase.auth.currentUser) {
   //   return <Redirect to={ROUTES.MAIN} />;
   // }
 
