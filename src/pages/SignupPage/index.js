@@ -11,6 +11,7 @@ import {
   IonButton
 } from '@ionic/react';
 
+import { withRouter, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
@@ -18,7 +19,7 @@ import * as ROUTES from '../../constants/routes';
 
 import '../index.css';
 
-const SignupPage = () => {
+const SignupPage = ({ history }) => {
   return (
     <IonContent fullscreen scroll-y="false">
       <IonGrid fixed className="content-wrapper">
@@ -89,4 +90,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default withRouter(SignupPage);

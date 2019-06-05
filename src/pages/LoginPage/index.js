@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useCallback, useContext } from 'react';
 import {
   IonContent,
   IonGrid,
@@ -11,6 +12,7 @@ import {
   IonButton
 } from '@ionic/react';
 
+import { withRouter, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
@@ -18,15 +20,36 @@ import * as ROUTES from '../../constants/routes';
 
 import '../index.css';
 
-const LoginPage = () => {
-  const handleSubmit = event => {
-    event.preventDefault();
-    const { email } = event.target.elements;
-    console.log(email.value);
-  };
+import FirebaseContext from '../../components/Firebase/context';
+
+const LoginPage = ({ history }) => {
+  const firebase = useContext(FirebaseContext);
+
+  const user = firebase.auth.currentUser;
+
+  const handleLogin = useCallback(
+    async event => {
+      event.preventDefault();
+      const { email, password } = event.target.elements;
+      try {
+        await firebase.auth.signInWithEmailAndPassword(email.value, password.value);
+        history.push(ROUTES.MAIN);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [history]
+  );
+
+  // If user then redirect to main app
+  // if (user) {
+  //   return <Redirect to={ROUTES.MAIN} />;
+  // }
+
   return (
     <IonContent fullscreen scroll-y="false">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <IonGrid fixed className="content-wrapper">
           <Header />
           <IonRow>
@@ -76,4 +99,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default withRouter(LoginPage);
