@@ -11,9 +11,8 @@ import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
 import SignUpWithGooglePage from '../pages/SignUpWithGoogle';
-// import PasswordForgetPage from '../pages/PasswordForgetPage';
-// import MainPage from '../pages/MainPage';
-// import ProfilePage from '../pages/ProfilePage';
+import PasswordForgetPage from '../pages/PasswordForgetPage';
+import MainPage from '../pages/MainPage';
 
 import FirebaseContext from './Firebase/context';
 import UserContext from './User/context';
@@ -60,9 +59,8 @@ const App = () => {
                 <Route path={ROUTES.LOG_IN} component={LoginPage} />
                 <Route path={ROUTES.SIGN_UP_EMAIL} component={SignupPage} />
                 <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
-                {/* <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-              <Route path={ROUTES.MAIN} component={MainPage} />
-              <Route path={ROUTES.PROFILE} component={ProfilePage} /> */}
+                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+                <Route path={ROUTES.MAIN} component={MainPage} />
               </Switch>
             </IonPage>
           </IonApp>
