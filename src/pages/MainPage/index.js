@@ -4,7 +4,6 @@ import React from 'react';
 import { Route } from 'react-router';
 
 import {
-  IonApp,
   IonContent,
   IonGrid,
   IonRow,
@@ -44,29 +43,28 @@ const MainPage = () => {
     <IonPage>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/:tab(schedule)" component={UserInfo} exact />
-          <Route path="/:tab(speakers)" component={UserInfo} exact />
-          <Route path="/:tab(speakers)/speaker/:id" component={UserInfo} />
-          <Route path="/:tab(schedule|speakers)/sessions/:id" component={UserInfo} />
-          <Route path="/:tab(map)" component={UserInfo} />
-          <Route path="/:tab(about)" component={UserInfo} />
+          <Route path="/:tab(add-place)" component={UserInfo} exact />
+          <Route path="/:tab(places)" component={UserInfo} exact />
+          <Route path="/:tab(places)/place/:id" component={UserInfo} />
+          <Route path="/:tab(weather)" component={UserInfo} />
+          <Route path="/:tab(profile)" component={UserInfo} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="schedule" href="/schedule">
-            <IonIcon name="calendar" />
-            <IonLabel>Schedule</IonLabel>
+          <IonTabButton tab="add-place" href="/add-place">
+            <IonIcon name="add-circle" />
+            <IonLabel>Dodaj</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="speakers" href="/speakers">
-            <IonIcon name="contacts" />
-            <IonLabel>Speakers</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="map" href="/map">
+          <IonTabButton tab="places" href="/places">
             <IonIcon name="map" />
-            <IonLabel>Map</IonLabel>
+            <IonLabel>Miejsca</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="about" href="/about">
-            <IonIcon name="information-circle" />
-            <IonLabel>About</IonLabel>
+          <IonTabButton tab="weather" href="/weather">
+            <IonIcon name="partly-sunny" />
+            <IonLabel>Pogoda</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="profile" href="/profile">
+            <IonIcon name="person" />
+            <IonLabel>Profil</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
