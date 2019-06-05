@@ -1,59 +1,87 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { IonContent, IonGrid, IonRow, IonCol, IonText, IonButton } from '@ionic/react';
 
-import { withRouter, Redirect } from 'react-router';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
 
 import FirebaseContext from '../../components/Firebase/context';
-
-import '../index.css';
+import UserContext from '../../components/User/context';
 
 const SignupPageWithGoogle = ({ history }) => {
   const firebase = useContext(FirebaseContext);
+  const { user } = useContext(UserContext);
 
-  const handleSignup = useCallback(
-    async event => {
-      event.preventDefault();
-      try {
-        await firebase.auth.signInWithPopup(firebase.googleProvider);
-        history.push(ROUTES.MAIN);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [history]
-  );
+  const [error, setError] = useState('');
 
-  // If user then redirect to main app
-  if (firebase.auth.currentUser) {
-    return <Redirect to={ROUTES.MAIN} />;
+  const handleSignup = async event => {
+    event.preventDefault();
+    try {
+      await firebase.auth.signInWithPopup(firebase.googleProvider);
+      history.push(ROUTES.LANDING);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  if (user) {
+    return (
+      <IonContent fullscreen>
+        <IonGrid fixed>
+          <Header />
+          <IonRow justify-content-center>
+            <IonCol size="12">
+              <h1 style={{ marginTop: '20vh' }} className="text-margin-bottom text-center">
+                You are already logged in
+              </h1>
+            </IonCol>
+            <IonCol size="12">
+              <Link to={ROUTES.MAIN}>
+                <IonButton expand="block" fill="clear" color="primary">
+                  Go to App
+                </IonButton>
+              </Link>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
+    );
+    // Change later to redirect to main app stack
+    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
     <IonContent fullscreen scroll-y="false">
-      <IonGrid fixed className="content-wrapper">
+      <IonGrid fixed>
         <Header />
-        <IonRow>
-          <IonCol className="center-column" size="12">
-            <h1 className="main-text">Sign Up with Google</h1>
+        <IonRow justify-content-center>
+          <IonCol size="12">
+            <h1 className="text-bottom-margin text-center">Sign Up with Google</h1>
+            {error && (
+              <IonText color="danger">
+                <p className="text-center">{error}</p>
+              </IonText>
+            )}
           </IonCol>
-          <IonCol className="center-column" size="12">
-            <IonButton expand="block" color="primary" className="input-size" onClick={handleSignup}>
+          <IonCol size="10">
+            <IonButton expand="block" color="primary" onClick={handleSignup}>
               CREAT ACCOUNT
             </IonButton>
           </IonCol>
         </IonRow>
-        <IonRow>
-          <IonCol className="center-text" size="12">
-            <IonText>Do you already have account? </IonText>
-            <Link to={ROUTES.LOG_IN}>
-              <IonText color="primary">Log in</IonText>
-            </Link>
+        <IonRow justify-content-center>
+          <IonCol size="10">
+            <IonText>
+              <p className="text-center">
+                Do you already have account?{' '}
+                <Link to={ROUTES.LOG_IN}>
+                  <IonText color="primary">Log in</IonText>
+                </Link>
+              </p>
+            </IonText>
           </IonCol>
         </IonRow>
       </IonGrid>
