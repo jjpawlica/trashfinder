@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   IonApp,
   IonContent,
@@ -12,55 +12,121 @@ import {
   IonButton
 } from '@ionic/react';
 
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
 
-import '../index.css';
+import FirebaseContext from '../../components/Firebase/context';
+import UserContext from '../../components/User/context';
 
-const PasswordForgetPage = () => {
-  return (
-    <IonApp>
-      <IonContent fullscreen scroll-y="false">
-        <IonGrid className="content-wrapper ">
+const PasswordForgetPage = ({ history }) => {
+  const firebase = useContext(FirebaseContext);
+  const { user } = useContext(UserContext);
+
+  const [email, setEmail] = useState('');
+  const [invalid, setInvalid] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (email !== '') {
+      setInvalid(false);
+    } else {
+      setInvalid(true);
+    }
+  }, [email]);
+
+  const handlePasswordReset = async event => {
+    event.preventDefault();
+    try {
+      await firebase.auth.sendPasswordResetEmail(email);
+      history.push(ROUTES.LANDING);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  if (user) {
+    return (
+      <IonContent fullscreen>
+        <IonGrid fixed>
           <Header />
-          <IonRow>
-            <IonCol className="center-column" size="12">
-              <h1 className="main-text">Forgot Password?</h1>
+          <IonRow justify-content-center>
+            <IonCol size="12">
+              <h1 style={{ marginTop: '20vh' }} className="text-margin-bottom text-center">
+                You are already logged in
+              </h1>
             </IonCol>
-            <IonCol className="center-column" size="12">
-              <IonItem className="input-size">
-                <IonLabel position="floating" color="primary">
-                  Email
-                </IonLabel>
-                <IonInput
-                  autofocus
-                  required
-                  pattern="email"
-                  placeholder="Enter Email"
-                  type="email"
-                />
-              </IonItem>
-            </IonCol>
-            <IonCol className="center-column" size="12">
-              <IonButton expand="block" color="primary" className="input-size">
-                RESET PASSWORD
-              </IonButton>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol className="center-text" size="12" align-self-end>
-              <IonText>Don&apos;t have account? </IonText>
-              <Link to={ROUTES.SIGN_UP_EMAIL}>
-                <IonText color="primary">Sing Up</IonText>
+            <IonCol size="12">
+              <Link to={ROUTES.MAIN}>
+                <IonButton expand="block" fill="clear" color="primary">
+                  Go to App
+                </IonButton>
               </Link>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
-    </IonApp>
+    );
+    // Change later to redirect to main app stack
+    // return <Redirect to={ROUTES.MAIN} />;
+  }
+
+  return (
+    <IonContent fullscreen scroll-y="false">
+      <IonGrid>
+        <Header />
+        <IonRow justify-content-center>
+          <IonCol size="12">
+            <h1 className="text-center text-bottom-margin">Forgot Password?</h1>
+            {error && (
+              <IonText color="danger">
+                <p className="text-center">{error}</p>
+              </IonText>
+            )}
+          </IonCol>
+          <IonCol size="10">
+            <IonItem>
+              <IonLabel position="floating" color="primary">
+                Email
+              </IonLabel>
+              <IonInput
+                autofocus
+                required
+                placeholder="Enter Email"
+                type="email"
+                value={email}
+                onIonChange={e => setEmail(e.currentTarget.value)}
+              />
+            </IonItem>
+          </IonCol>
+          <IonCol size="10">
+            <IonButton
+              expand="block"
+              color="primary"
+              disabled={invalid}
+              onClick={handlePasswordReset}
+            >
+              RESET PASSWORD
+            </IonButton>
+          </IonCol>
+        </IonRow>
+        <IonRow justify-content-center>
+          <IonCol size="12">
+            <IonText>
+              <p className="text-center">
+                Don&apos;t have account?{' '}
+                <Link to={ROUTES.SIGN_UP_EMAIL}>
+                  <IonText color="primary">Sign Up</IonText>
+                </Link>
+              </p>{' '}
+            </IonText>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+    </IonContent>
   );
 };
 
-export default PasswordForgetPage;
+export default withRouter(PasswordForgetPage);
