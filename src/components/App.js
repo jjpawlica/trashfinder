@@ -10,6 +10,7 @@ import SignupPage from '../pages/SignupPage';
 import SignUpWithGooglePage from '../pages/SignUpWithGoogle';
 import PasswordForgetPage from '../pages/PasswordForgetPage';
 import MainPage from '../pages/MainPage';
+import ProfilePage from '../pages/ProfilePage';
 
 import * as ROUTES from '../constants/routes';
 
@@ -29,6 +30,7 @@ const App = () => {
               <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
               <Route path={ROUTES.MAIN} component={MainPage} />
+              <Route path={ROUTES.PROFILE} component={ProfilePage} />
             </Switch>
           </IonPage>
         </IonApp>

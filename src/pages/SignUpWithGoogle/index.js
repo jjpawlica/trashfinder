@@ -30,9 +30,9 @@ const SignupPageWithGoogle = ({ history }) => {
   );
 
   // If user then redirect to main app
-  // if (firebase.auth.currentUser) {
-  //   return <Redirect to={ROUTES.MAIN} />;
-  // }
+  if (firebase.auth.currentUser) {
+    return <Redirect to={ROUTES.MAIN} />;
+  }
 
   return (
     <IonContent fullscreen scroll-y="false">

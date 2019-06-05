@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import {
   IonContent,
   IonGrid,
@@ -40,10 +40,9 @@ const LoginPage = ({ history }) => {
     [history]
   );
 
-  // If user then redirect to main app
-  // if (firebase.auth.currentUser) {
-  //   return <Redirect to={ROUTES.MAIN} />;
-  // }
+  if (firebase.auth.currentUser) {
+    return <Redirect to={ROUTES.MAIN} />;
+  }
 
   return (
     <IonContent fullscreen scroll-y="false">
