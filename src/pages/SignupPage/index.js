@@ -34,19 +34,18 @@ const SignupPage = ({ history }) => {
   useEffect(() => {
     if (email !== '' && passwordOne !== '' && passwordTwo !== '' && passwordOne === passwordTwo) {
       setInvalid(false);
+    } else {
+      setInvalid(true);
     }
   }, [email, passwordOne, passwordTwo]);
 
   const handleSignup = async event => {
     event.preventDefault();
     try {
-      console.log(email, passwordOne);
       await firebase.auth.createUserWithEmailAndPassword(email, passwordOne);
       history.push(ROUTES.LANDING);
     } catch (err) {
-      console.log(err.message);
       setError(err.message);
-      console.log(error);
     }
   };
 
