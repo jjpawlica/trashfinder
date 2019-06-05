@@ -4,11 +4,13 @@ import { IonPage, IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, Ion
 
 
 import TabBar from '../../components/Navigation/TabBar';
+import Header from '../../components/Header';
 
 const MainPage = () => {
   return (
     <IonPage>
-      
+      <Header />
+
       <IonList>
         <IonItem>
           <IonLabel>Pokémon Yellow</IonLabel>
@@ -21,6 +23,12 @@ const MainPage = () => {
         </IonItem>
         <IonItem>
           <IonLabel>Pac-Man</IonLabel>
+        </IonItem>
+        <IonItem>
+          <IonLabel>Super Mario World</IonLabel>
+        </IonItem>
+        <IonItem>
+          <IonLabel>Super Mario World</IonLabel>
         </IonItem>
         <IonItem>
           <IonLabel>Super Mario World</IonLabel>
