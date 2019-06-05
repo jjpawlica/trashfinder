@@ -13,7 +13,7 @@ import startImage from '../../images/start-image.svg';
 
 const LandingPage = () => {
   return (
-    <IonContent fullscreen scroll-y="false">
+    <IonContent fullscreen>
       <IonGrid>
         <IonRow>
           <IonCol size="12">
