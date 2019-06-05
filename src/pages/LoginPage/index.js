@@ -47,9 +47,16 @@ const LoginPage = ({ history }) => {
           <Header />
           <IonRow justify-content-center>
             <IonCol size="12">
-              <h1 style={{ marginTop: '25vh' }} className="text-margin-bottom text-center">
+              <h1 style={{ marginTop: '20vh' }} className="text-margin-bottom text-center">
                 You are already logged in
               </h1>
+            </IonCol>
+            <IonCol size="12">
+              <Link to={ROUTES.MAIN}>
+                <IonButton expand="block" fill="clear" color="primary">
+                  Go to App
+                </IonButton>
+              </Link>
             </IonCol>
           </IonRow>
         </IonGrid>
