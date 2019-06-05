@@ -53,7 +53,7 @@ const App = () => {
       <Router>
         <div id="app">
           <IonApp>
-            <IonPage>
+            <IonPage id="main">
               <Switch>
                 <Route exact path={ROUTES.LANDING} component={LandingPage} />
                 <Route path={ROUTES.LOG_IN} component={LoginPage} />
