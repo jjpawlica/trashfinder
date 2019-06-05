@@ -28,9 +28,8 @@ const SignupPageWithGoogle = ({ history }) => {
   const handleSignup = useCallback(
     async event => {
       event.preventDefault();
-      const { email, password } = event.target.elements;
       try {
-        await firebase.auth.createUserWithEmailAndPassword(email.value, password.value);
+        await firebase.auth.signInWithPopup(firebase.googleProvider);
         history.push(ROUTES.MAIN);
       } catch (err) {
         console.log(err);
@@ -54,7 +53,7 @@ const SignupPageWithGoogle = ({ history }) => {
             <h1 className="main-text">Sign Up with Google</h1>
           </IonCol>
           <IonCol className="center-column" size="12">
-            <IonButton expand="block" color="primary" className="input-size" type="submit">
+            <IonButton expand="block" color="primary" className="input-size" onClick={handleSignup}>
               CREAT ACCOUNT
             </IonButton>
           </IonCol>

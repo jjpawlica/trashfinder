@@ -7,6 +7,7 @@ import { IonApp, IonPage } from '@ionic/react';
 import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
+import SignUpWithGooglePage from '../pages/SignUpWithGoogle';
 import PasswordForgetPage from '../pages/PasswordForgetPage';
 import MainPage from '../pages/MainPage';
 
@@ -25,7 +26,7 @@ const App = () => {
               <Route exact path={ROUTES.LANDING} component={LandingPage} />
               <Route path={ROUTES.LOG_IN} component={LoginPage} />
               <Route path={ROUTES.SIGN_UP_EMAIL} component={SignupPage} />
-              <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignupPage} />
+              <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
               <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
               <Route path={ROUTES.MAIN} component={MainPage} />
             </Switch>
