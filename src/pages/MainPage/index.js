@@ -1,50 +1,33 @@
 import React from 'react';
 
-import { IonIcon, IonLabel, IonPage, IonTabBar, IonTabButton, IonTabs, IonTab } from '@ionic/react';
+import { IonPage, IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
+
+
+import TabBar from '../../components/Navigation/TabBar';
 
 const MainPage = () => {
   return (
     <IonPage>
-      <IonTabs
-        ionTabsDidChange={() => {
-          alert('ionTabsDidChange');
-        }}
-        ionTabsWillChange={() => {
-          alert('ionTabsWillChange');
-        }}
-      >
-        <IonTab tab="add-place">
-          <h1>ADD PLACE</h1>
-        </IonTab>
-        <IonTab tab="places">
-          <h1>PLACES</h1>
-        </IonTab>
-        <IonTab tab="weather">
-          <h1>WEATHER</h1>
-        </IonTab>
-        <IonTab tab="profile">
-          <h1>PROFILE</h1>
-        </IonTab>
+      
+      <IonList>
+        <IonItem>
+          <IonLabel>Pokémon Yellow</IonLabel>
+        </IonItem>
+        <IonItem>
+          <IonLabel>Mega Man X</IonLabel>
+        </IonItem>
+        <IonItem>
+          <IonLabel>The Legend of Zelda</IonLabel>
+        </IonItem>
+        <IonItem>
+          <IonLabel>Pac-Man</IonLabel>
+        </IonItem>
+        <IonItem>
+          <IonLabel>Super Mario World</IonLabel>
+        </IonItem>
+      </IonList>
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="add-place">
-            <IonIcon name="add-circle" />
-            <IonLabel>Dodaj</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="places">
-            <IonIcon name="map" />
-            <IonLabel>Miejsca</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="weather">
-            <IonIcon name="partly-sunny" />
-            <IonLabel>Pogoda</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="profile">
-            <IonIcon name="person" />
-            <IonLabel>Profil</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
+      <TabBar />
     </IonPage>
   );
 };
