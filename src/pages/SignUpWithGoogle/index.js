@@ -1,16 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback, useContext } from 'react';
-import {
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonText,
-  IonButton
-} from '@ionic/react';
+import { IonContent, IonGrid, IonRow, IonCol, IonText, IonButton } from '@ionic/react';
 
 import { withRouter, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
