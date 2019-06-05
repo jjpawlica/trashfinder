@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import {
   IonContent,
   IonGrid,
@@ -25,20 +25,28 @@ const LoginPage = ({ history }) => {
   const firebase = useContext(FirebaseContext);
   const { user } = useContext(UserContext);
 
-  const handleLogin = useCallback(
-    async event => {
-      event.preventDefault();
-      const { email, password } = event.target.elements;
-      try {
-        await firebase.auth.signInWithEmailAndPassword(email.value, password.value);
-        history.push(ROUTES.LANDING);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [history]
-  );
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [invalid, setInvalid] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (email !== '' && password !== '') {
+      setInvalid(false);
+    } else {
+      setInvalid(true);
+    }
+  }, [email, password]);
+
+  const handleLogin = async event => {
+    event.preventDefault();
+    try {
+      await firebase.auth.signInWithEmailAndPassword(email, password);
+      history.push(ROUTES.LANDING);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   if (user) {
     return (
@@ -74,13 +82,26 @@ const LoginPage = ({ history }) => {
           <IonRow justify-content-center>
             <IonCol size="12">
               <h1 className="text-margin-bottom text-center">Log In</h1>
+              {error && (
+                <IonText color="danger">
+                  <p className="text-center">{error}</p>
+                </IonText>
+              )}
             </IonCol>
             <IonCol size="10">
               <IonItem>
                 <IonLabel position="floating" color="primary">
                   Email
                 </IonLabel>
-                <IonInput autofocus required placeholder="Enter Email" type="email" name="email" />
+                <IonInput
+                  autofocus
+                  required
+                  placeholder="Enter Email"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onIonChange={e => setEmail(e.currentTarget.value)}
+                />
               </IonItem>
             </IonCol>
             <IonCol size="10">
@@ -88,11 +109,18 @@ const LoginPage = ({ history }) => {
                 <IonLabel position="floating" color="primary">
                   Password
                 </IonLabel>
-                <IonInput required placeholder="Eneter Password" type="password" name="password" />
+                <IonInput
+                  required
+                  placeholder="Eneter Password"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onIonChange={e => setPassword(e.currentTarget.value)}
+                />
               </IonItem>
             </IonCol>
             <IonCol size="10">
-              <IonButton expand="block" color="primary" type="submit">
+              <IonButton expand="block" color="primary" type="submit" disabled={invalid}>
                 LOG IN
               </IonButton>
             </IonCol>
