@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { Route, Redirect } from 'react-router-dom';
 
@@ -17,16 +17,9 @@ import PlacesTab from './tabs/places';
 import PlaceTab from './tabs/place';
 import WeatherTab from './tabs/weather';
 import ProfileTab from './tabs/profile';
-
-import UserContext from '../../components/User/context';
+import ProfileEditTab from './tabs/edit';
 
 const MainPage = () => {
-  const { user } = useContext(UserContext);
-
-  if (!user) {
-    return <Redirect to="/" />;
-  }
-
   return (
     <IonPage>
       <Route exact path="/" render={() => <Redirect to="/places" />} />
@@ -37,6 +30,7 @@ const MainPage = () => {
           <Route path="/:tab(places)/place/:id" component={PlaceTab} />
           <Route exact path="/:tab(weather)" component={WeatherTab} />
           <Route exact path="/:tab(profile)" component={ProfileTab} />
+          <Route path="/:tab(profile)/edit" component={ProfileEditTab} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="add-place" href="/add-place">
