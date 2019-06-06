@@ -13,7 +13,6 @@ import {
 } from '@ionic/react';
 
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
@@ -61,18 +60,19 @@ const SignupPage = ({ history }) => {
               </h1>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.MAIN}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Przejdź do aplikacji
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.LANDING)}
+              >
+                Go to App
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     );
-    // Change later to redirect to main app stack
-    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
@@ -144,10 +144,10 @@ const SignupPage = ({ history }) => {
             <IonCol size="12">
               <IonText>
                 <p className="text-center">
-                  Czy posiadasz już kontot?{' '}
-                  <Link to={ROUTES.LOG_IN}>
-                    <IonText color="primary">Zaloguj</IonText>
-                  </Link>
+                  Do you already have account?{' '}
+                  <IonText color="primary" onClick={() => history.push(ROUTES.LOG_IN)}>
+                    Log in
+                  </IonText>
                 </p>
               </IonText>
             </IonCol>

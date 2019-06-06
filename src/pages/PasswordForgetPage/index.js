@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useContext, useState, useEffect } from 'react';
 import {
-  IonApp,
   IonContent,
   IonGrid,
   IonRow,
@@ -13,7 +13,6 @@ import {
 } from '@ionic/react';
 
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
@@ -59,18 +58,19 @@ const PasswordForgetPage = ({ history }) => {
               </h1>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.MAIN}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Przejdź do aplikacji
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.LANDING)}
+              >
+                Go to App
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     );
-    // Change later to redirect to main app stack
-    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
@@ -116,11 +116,11 @@ const PasswordForgetPage = ({ history }) => {
           <IonCol size="12">
             <IonText>
               <p className="text-center">
-                Nie masz konta?{' '}
-                <Link to={ROUTES.SIGN_UP_EMAIL}>
-                  <IonText color="primary">Zarejestruj</IonText>
-                </Link>
-              </p>{' '}
+                Don&apos;t have account?{' '}
+                <IonText color="primary" onClick={() => history.push(ROUTES.SIGN_UP_EMAIL)}>
+                  Sign Up
+                </IonText>
+              </p>
             </IonText>
           </IonCol>
         </IonRow>

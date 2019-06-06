@@ -1,41 +1,62 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { IonPage, IonList, IonItem, IonLabel, IonInput, IonToggle, IonRadio, IonCheckbox, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
+import { Route, Redirect } from 'react-router-dom';
 
+import {
+  IonIcon,
+  IonLabel,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  IonRouterOutlet,
+  IonPage
+} from '@ionic/react';
 
-import TabBar from '../../components/Navigation/TabBar';
-import Header from '../../components/Header';
+import AddPlaceTab from './tabs/add';
+import PlacesTab from './tabs/places';
+import PlaceTab from './tabs/place';
+import WeatherTab from './tabs/weather';
+import ProfileTab from './tabs/profile';
+
+import UserContext from '../../components/User/context';
 
 const MainPage = () => {
+  const { user } = useContext(UserContext);
+
+  if (!user) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <IonPage>
-      <Header />
-
-      <IonList>
-        <IonItem>
-          <IonLabel>Pokémon Yellow</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Mega Man X</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>The Legend of Zelda</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Pac-Man</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Super Mario World</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Super Mario World</IonLabel>
-        </IonItem>
-        <IonItem>
-          <IonLabel>Super Mario World</IonLabel>
-        </IonItem>
-      </IonList>
-
-      <TabBar />
+      <Route exact path="/" render={() => <Redirect to="/places" />} />
+      <IonTabs>
+        <IonRouterOutlet>
+          <Route exact path="/:tab(add-place)" component={AddPlaceTab} />
+          <Route exact path="/:tab(places)" component={PlacesTab} />
+          <Route path="/:tab(places)/place/:id" component={PlaceTab} />
+          <Route exact path="/:tab(weather)" component={WeatherTab} />
+          <Route exact path="/:tab(profile)" component={ProfileTab} />
+        </IonRouterOutlet>
+        <IonTabBar slot="bottom">
+          <IonTabButton tab="add-place" href="/add-place">
+            <IonIcon name="add-circle" />
+            <IonLabel>Dodaj</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="places" href="/places">
+            <IonIcon name="map" />
+            <IonLabel>Miejsca</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="weather" href="/weather">
+            <IonIcon name="partly-sunny" />
+            <IonLabel>Pogoda</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="profile" href="/profile">
+            <IonIcon name="person" />
+            <IonLabel>Profil</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
     </IonPage>
   );
 };
