@@ -18,6 +18,8 @@ class Firebase {
     this.auth = firebase.auth();
     this.db = firebase.firestore();
 
+    this.timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
     this.googleProvider = new firebase.auth.GoogleAuthProvider();
   }
 }
