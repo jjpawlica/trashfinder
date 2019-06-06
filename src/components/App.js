@@ -62,14 +62,17 @@ const App = () => {
       <Router>
         <IonApp>
           <IonPage>
-            <IonRouterOutlet>
-              <Route exact path={ROUTES.LANDING} component={LandingPage} />
-              <Route path={ROUTES.LOG_IN} component={LoginPage} />
-              <Route path={ROUTES.SIGN_UP_EMAIL} component={SignupPage} />
-              <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
-              <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-              <Route path={ROUTES.MAIN} component={MainPage} />
-            </IonRouterOutlet>
+            {user ? (
+              <MainPage />
+            ) : (
+              <IonRouterOutlet>
+                <Route exact path={ROUTES.LANDING} component={LandingPage} />
+                <Route path={ROUTES.LOG_IN} component={LoginPage} />
+                <Route path={ROUTES.SIGN_UP_EMAIL} component={SignupPage} />
+                <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
+                <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+              </IonRouterOutlet>
+            )}
           </IonPage>
         </IonApp>
       </Router>

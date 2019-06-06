@@ -1,45 +1,49 @@
 import React from 'react';
 
-import { IonIcon, IonLabel, IonPage, IonTabBar, IonTabButton, IonTabs, IonTab } from '@ionic/react';
+import { Route, Redirect } from 'react-router-dom';
+
+import {
+  IonIcon,
+  IonLabel,
+  IonTabBar,
+  IonTabButton,
+  IonTabs,
+  IonRouterOutlet,
+  IonPage
+} from '@ionic/react';
+
+import AddPlaceTab from './tabs/add';
+import PlacesTab from './tabs/places';
+import PlaceTab from './tabs/place';
+import WeatherTab from './tabs/weather';
+import ProfileTab from './tabs/profile';
 
 const MainPage = () => {
   return (
     <IonPage>
-      <IonTabs
-        ionTabsDidChange={() => {
-          alert('ionTabsDidChange');
-        }}
-        ionTabsWillChange={() => {
-          alert('ionTabsWillChange');
-        }}
-      >
-        <IonTab tab="add-place">
-          <h1>ADD PLACE</h1>
-        </IonTab>
-        <IonTab tab="places">
-          <h1>PLACES</h1>
-        </IonTab>
-        <IonTab tab="weather">
-          <h1>WEATHER</h1>
-        </IonTab>
-        <IonTab tab="profile">
-          <h1>PROFILE</h1>
-        </IonTab>
-
+      <Route exact path="/" render={() => <Redirect to="/places" />} />
+      <IonTabs>
+        <IonRouterOutlet>
+          <Route exact path="/:tab(add-place)" component={AddPlaceTab} />
+          <Route exact path="/:tab(places)" component={PlacesTab} />
+          <Route path="/:tab(places)/place/:id" component={PlaceTab} />
+          <Route exact path="/:tab(weather)" component={WeatherTab} />
+          <Route exact path="/:tab(profile)" component={ProfileTab} />
+        </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="add-place">
+          <IonTabButton tab="add-place" href="/add-place">
             <IonIcon name="add-circle" />
             <IonLabel>Dodaj</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="places">
+          <IonTabButton tab="places" href="/places">
             <IonIcon name="map" />
             <IonLabel>Miejsca</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="weather">
+          <IonTabButton tab="weather" href="/weather">
             <IonIcon name="partly-sunny" />
             <IonLabel>Pogoda</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="profile">
+          <IonTabButton tab="profile" href="/profile">
             <IonIcon name="person" />
             <IonLabel>Profil</IonLabel>
           </IonTabButton>
