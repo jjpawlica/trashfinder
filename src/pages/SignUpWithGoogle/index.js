@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react';
 import { IonContent, IonGrid, IonRow, IonCol, IonText, IonButton } from '@ionic/react';
 
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
@@ -39,18 +38,19 @@ const SignupPageWithGoogle = ({ history }) => {
               </h1>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.MAIN}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Przejdź do aplikacji
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.LANDING)}
+              >
+                Go to App
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     );
-    // Change later to redirect to main app stack
-    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
@@ -76,10 +76,10 @@ const SignupPageWithGoogle = ({ history }) => {
           <IonCol size="10">
             <IonText>
               <p className="text-center">
-                Czy posiadasz już konto?{' '}
-                <Link to={ROUTES.LOG_IN}>
-                  <IonText color="primary">Zaloguj</IonText>
-                </Link>
+                Do you already have account?{' '}
+                <IonText color="primary" onClick={() => history.push(ROUTES.SIGN_UP_EMAIL)}>
+                  Log in
+                </IonText>
               </p>
             </IonText>
           </IonCol>

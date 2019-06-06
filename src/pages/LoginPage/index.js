@@ -12,8 +12,7 @@ import {
   IonButton
 } from '@ionic/react';
 
-import { withRouter, Redirect } from 'react-router';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import Header from '../../components/Header';
 import * as ROUTES from '../../constants/routes';
@@ -60,18 +59,19 @@ const LoginPage = ({ history }) => {
               </h1>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.MAIN}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Przejdź do aplikacji
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.LANDING)}
+              >
+                Go to App
+              </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
     );
-    // Change later to redirect to main app stack
-    // return <Redirect to={ROUTES.MAIN} />;
   }
 
   return (
@@ -125,21 +125,24 @@ const LoginPage = ({ history }) => {
               </IonButton>
             </IonCol>
             <IonCol size="12">
-              <Link to={ROUTES.PASSWORD_FORGET}>
-                <IonButton expand="block" fill="clear" color="primary">
-                  Zapomniałeś hasła?
-                </IonButton>
-              </Link>
+              <IonButton
+                expand="block"
+                fill="clear"
+                color="primary"
+                onClick={() => history.push(ROUTES.PASSWORD_FORGET)}
+              >
+                Forgot Password?
+              </IonButton>
             </IonCol>
           </IonRow>
           <IonRow justify-content-center>
             <IonCol>
               <IonText>
                 <p className="text-center">
-                  Nie masz konta?{' '}
-                  <Link to={ROUTES.SIGN_UP_EMAIL}>
-                    <IonText color="primary">Sign Up</IonText>
-                  </Link>
+                  Don&apos;t have account?{' '}
+                  <IonText color="primary" onClick={() => history.push(ROUTES.SIGN_UP_EMAIL)}>
+                    Sign Up
+                  </IonText>
                 </p>
               </IonText>
             </IonCol>
