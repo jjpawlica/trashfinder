@@ -41,9 +41,14 @@ const SignupPage = ({ history }) => {
   const handleSignup = async event => {
     event.preventDefault();
     try {
-      await firebase.auth.createUserWithEmailAndPassword(email, passwordOne);
-      history.push(ROUTES.LANDING);
+      const response = await firebase.auth.createUserWithEmailAndPassword(email, passwordOne);
+      await firebase.db
+        .collection('users')
+        .doc(response.user.uid)
+        .set({ test: 'test creation' });
+      // history.push(ROUTES.LANDING);
     } catch (err) {
+      console.log(err);
       setError(err.message);
     }
   };
