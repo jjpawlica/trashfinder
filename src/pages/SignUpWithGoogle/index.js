@@ -20,7 +20,7 @@ const SignupPageWithGoogle = ({ history }) => {
     event.preventDefault();
     try {
       await firebase.auth.signInWithPopup(firebase.googleProvider);
-      history.push(ROUTES.MAIN);
+      history.push(ROUTES.LANDING);
     } catch (err) {
       setError(err.message);
     }
@@ -42,7 +42,7 @@ const SignupPageWithGoogle = ({ history }) => {
                 expand="block"
                 fill="clear"
                 color="primary"
-                onClick={() => history.push(ROUTES.MAIN)}
+                onClick={() => history.push(ROUTES.LANDING)}
               >
                 Go to App
               </IonButton>

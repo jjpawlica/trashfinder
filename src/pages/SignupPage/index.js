@@ -42,7 +42,7 @@ const SignupPage = ({ history }) => {
     event.preventDefault();
     try {
       await firebase.auth.createUserWithEmailAndPassword(email, passwordOne);
-      history.push(ROUTES.MAIN);
+      history.push(ROUTES.LANDING);
     } catch (err) {
       setError(err.message);
     }
@@ -64,7 +64,7 @@ const SignupPage = ({ history }) => {
                 expand="block"
                 fill="clear"
                 color="primary"
-                onClick={() => history.push(ROUTES.MAIN)}
+                onClick={() => history.push(ROUTES.LANDING)}
               >
                 Go to App
               </IonButton>

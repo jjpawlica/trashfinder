@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Route, Redirect } from 'react-router-dom';
 
@@ -18,7 +18,15 @@ import PlaceTab from './tabs/place';
 import WeatherTab from './tabs/weather';
 import ProfileTab from './tabs/profile';
 
+import UserContext from '../../components/User/context';
+
 const MainPage = () => {
+  const { user } = useContext(UserContext);
+
+  if (!user) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <IonPage>
       <Route exact path="/" render={() => <Redirect to="/places" />} />

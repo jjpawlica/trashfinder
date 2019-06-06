@@ -4,7 +4,7 @@
 import React, { useContext } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import {
   IonApp,
   IonPage,
