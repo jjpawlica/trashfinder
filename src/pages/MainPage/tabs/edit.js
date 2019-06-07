@@ -29,43 +29,29 @@ const ProfileEditTab = () => {
   const [invalid, setInvalid] = useState(true);
   const [error, setError] = useState('');
 
-  // If there is a displayName set state
+  // Check if current user has username
   useEffect(() => {
-    if (user.displayName) {
-      setUsername(user.displayName);
-    }
-  }, [user.displayName]);
+    const fetchUsername = async () => {
+      const response = await firebase
+        .firestore()
+        .collection('users')
+        .doc(user.uid)
+        .get();
 
-  // If username is not empty allow submit
-  useEffect(() => {
-    if (username !== '') {
-      setInvalid(false);
-    } else {
-      setInvalid(true);
-    }
-  }, [username]);
+      const data = response.data();
+      if (data.username) {
+        setUsername(data.username);
+      }
+    };
+    fetchUsername();
+  }, [firebase, firebase.db, user.uid]);
 
   const handleProfileChange = async event => {
     event.preventDefault();
-    try {
-      await firebase.auth.currentUser.updateProfile({
-        displayName: username
-      });
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const removeDisplayName = async event => {
     event.preventDefault();
-    try {
-      await firebase.auth.currentUser.updateProfile({
-        displayName: null
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    setUsername('');
   };
 
   return (
@@ -104,8 +90,7 @@ const ProfileEditTab = () => {
                   autofocus
                   required
                   placeholder="Nazwa użytkownika"
-                  type="email"
-                  name="email"
+                  name="username"
                   value={username}
                   onIonChange={e => setUsername(e.currentTarget.value)}
                 />
