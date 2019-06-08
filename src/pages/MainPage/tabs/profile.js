@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import {
   IonHeader,
@@ -20,7 +20,26 @@ import avatar from '../../../images/avatar.svg';
 const ProfileTab = () => {
   const firebase = useContext(FirebaseContext);
   const { user } = useContext(UserContext);
-  const { displayName, email, photoURL } = user;
+  const { email, photoURL } = user;
+
+  const [currentUsername, setCurrentUsername] = useState('');
+
+  // Check if current user has username
+  useEffect(() => {
+    const fetchUsername = async () => {
+      const response = await firebase.db
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+      const data = response.data();
+      if (data.username) {
+        setCurrentUsername(data.username);
+      }
+    };
+    fetchUsername();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSingout = async event => {
     event.preventDefault();
@@ -59,7 +78,7 @@ const ProfileTab = () => {
           </IonRow>
           <IonRow justify-content-center>
             <IonCol size="12">
-              {displayName && <h1 className="text-center">{displayName}</h1>}
+              {currentUsername && <h1 className="text-center">{currentUsername}</h1>}
               <h4 className="text-center text-bottom-margin">{email}</h4>
             </IonCol>
           </IonRow>
