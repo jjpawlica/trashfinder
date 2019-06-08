@@ -18,36 +18,40 @@ import {
   IonAvatar
 } from '@ionic/react';
 
+import { Marker } from 'google-maps-react';
+
+import PlacesMap from '../../../components/Map/list';
+
 const places = [
   {
     id: 1,
-    long: -73.564543,
-    lat: 45.5080397
+    lat: 45.5080397,
+    lng: -73.564543
   },
   {
     id: 2,
-    long: -37.809338,
-    lat: -10.7397921
+    lat: -10.7397921,
+    lng: -37.809338
   },
   {
     id: 3,
-    long: 20.3755648,
-    lat: 41.9238499
+    lat: 41.9238499,
+    lng: 20.3755648
   },
   {
     id: 4,
-    long: -73.54,
-    lat: 41.05
+    lat: 41.05,
+    lng: -73.54
   },
   {
     id: 5,
-    long: '120.0169',
-    lat: '15.252'
+    lat: 15.252,
+    lng: 120.0169
   }
 ];
 
 const PlaceItem = ({ place, history }) => {
-  const { id, long, lat } = place;
+  const { id, lng, lat } = place;
 
   const goToLink = async event => {
     if (!event.currentTarget) {
@@ -71,7 +75,7 @@ const PlaceItem = ({ place, history }) => {
       <IonCardContent>
         <IonList>
           <IonItem>
-            <h3>Long: {long}</h3>
+            <h3>Long: {lng}</h3>
           </IonItem>
           <IonItem>
             <h3>Lat: {lat}</h3>
@@ -83,6 +87,12 @@ const PlaceItem = ({ place, history }) => {
 };
 
 const PlacesTab = ({ history }) => {
+  const points = places.map(place => {
+    const point = {};
+    point.lat = place.lat;
+    point.lng = place.lng;
+    return point;
+  });
   return (
     <>
       <IonHeader>
@@ -91,17 +101,24 @@ const PlacesTab = ({ history }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonList>
-          <IonGrid fixed>
-            <IonRow align-items-stretch>
-              {places.map(place => (
-                <IonCol size="12" key={place.id}>
-                  <PlaceItem place={place} history={history} />
-                </IonCol>
-              ))}
-            </IonRow>
-          </IonGrid>
-        </IonList>
+        <IonGrid fixed>
+          <IonRow align-items-center justify-content-center>
+            <IonCol size="10" style={{ height: '50vh' }}>
+              <PlacesMap points={points}>
+                {places.map(place => (
+                  <Marker key={place.id} position={{ lat: place.lat, lng: place.lng }} />
+                ))}
+              </PlacesMap>
+            </IonCol>
+          </IonRow>
+          <IonRow align-items-center justify-content-center>
+            {places.map(place => (
+              <IonCol size="10" key={place.id}>
+                <PlaceItem place={place} history={history} />
+              </IonCol>
+            ))}
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </>
   );
