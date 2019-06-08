@@ -71,6 +71,11 @@ const App = () => {
                 <Route path={ROUTES.SIGN_UP_EMAIL} component={SignupPage} />
                 <Route path={ROUTES.SIGN_UP_GOOGLE} component={SignUpWithGooglePage} />
                 <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+                {/* Hack for user logut  */}
+                <Route path="/add-place" component={LandingPage} />
+                <Route path="/places" component={LandingPage} />
+                <Route path="/weather" component={LandingPage} />
+                <Route path="/profile" component={LandingPage} />
               </IonRouterOutlet>
             )}
           </IonPage>

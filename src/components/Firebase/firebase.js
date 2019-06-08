@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -15,6 +16,9 @@ class Firebase {
   constructor() {
     firebase.initializeApp(config);
     this.auth = firebase.auth();
+    this.db = firebase.firestore();
+
+    this.timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
     this.googleProvider = new firebase.auth.GoogleAuthProvider();
   }
