@@ -27,7 +27,7 @@ import MapContainer from '../../../components/Map/add';
 import FirebaseContext from '../../../components/Firebase/context';
 import UserContext from '../../../components/User/context';
 
-const AddPlaceTab = () => {
+const AddPlaceTab = ({ history }) => {
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
   const [name, setName] = useState('');
@@ -90,7 +90,7 @@ const AddPlaceTab = () => {
         createAt: firebase.timestamp
       });
 
-      console.log(ref);
+      history.push(`/places/place/${ref.id}`);
     } catch (err) {
       setError(err.message);
     }
