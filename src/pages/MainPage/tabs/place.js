@@ -18,7 +18,8 @@ import {
   IonLabel,
   IonAvatar,
   IonThumbnail,
-  IonTextarea
+  IonTextarea,
+  IonText
 } from '@ionic/react';
 
 import { Marker } from 'google-maps-react';
@@ -44,6 +45,9 @@ const PlaceTab = ({ match, history }) => {
   const [createdAt, setCreatedAt] = useState('');
   const [createdBy, setCreatedBy] = useState('');
   const [createdByUsername, setCreatedByUsername] = useState('');
+  const [users, setUsers] = useState([]);
+
+  const [canJoin, setCanJoin] = useState(true);
 
   const [comment, setComment] = useState('');
 
@@ -62,6 +66,7 @@ const PlaceTab = ({ match, history }) => {
         setName(place.name);
         setDescritpion(place.description);
         setStatus(place.status);
+        setUsers(place.users);
         setCreatedAt(place.createdAt.toDate().toLocaleDateString('pl-PL'));
 
         const userRef = await firebase.db
@@ -90,6 +95,10 @@ const PlaceTab = ({ match, history }) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleEventJoin = async event => {
+    event.preventDefault();
   };
 
   return (
@@ -136,9 +145,9 @@ const PlaceTab = ({ match, history }) => {
                     </IonItem>
                     <IonItem>
                       {status ? (
-                        <p style={{ color: 'red' }}>Status: posprzątane</p>
+                        <p style={{ color: 'green' }}>Status: posprzątane</p>
                       ) : (
-                        <p style={{ color: 'green' }}>Status: nie posprzątane</p>
+                        <p style={{ color: 'red' }}>Status: nie posprzątane</p>
                       )}
                       {user.uid === createdBy && (
                         <IonButton fill="clear" slot="end" onClick={handleChanceStatus}>
@@ -209,11 +218,16 @@ const PlaceTab = ({ match, history }) => {
               <IonCard>
                 <IonCardHeader>
                   <IonItem>
-                    <IonLabel>
-                      <IonAvatar style={{ width: '32px', height: '32px' }}>
-                        <img src={user.photoURL || avatar} alt="avatar" />
-                      </IonAvatar>
-                    </IonLabel>
+                    <IonGrid>
+                      <IonRow>
+                        {users.slice(0, 5).map(() => (
+                          <IonAvatar style={{ marginLeft: '4px', width: '32px', height: '32px' }}>
+                            <img src={avatar} alt="avatar" />
+                          </IonAvatar>
+                        ))}
+                        {users.length > 5 && <IonText>...</IonText>}
+                      </IonRow>
+                    </IonGrid>
                     <IonButton fill="clear" slot="end">
                       DOŁĄCZ DO SPRZĄTANIA
                     </IonButton>
@@ -222,7 +236,7 @@ const PlaceTab = ({ match, history }) => {
                 <IonCardContent>
                   <IonList>
                     <IonItem>
-                      <p>Chętynch: 10 osób</p>
+                      <p>Chętynch: {users.length}</p>
                     </IonItem>
                     <IonItem>
                       <p>W dniu: 15.06.2019</p>

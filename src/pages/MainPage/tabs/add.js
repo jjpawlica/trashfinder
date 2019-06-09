@@ -87,7 +87,9 @@ const AddPlaceTab = ({ history }) => {
         description,
         location: new firebase.GeoPoint(lat, lng),
         user: user.uid,
-        createAt: firebase.timestamp
+        status: false,
+        createAt: firebase.timestamp,
+        users: [user.uid]
       });
 
       history.push(`/places/place/${ref.id}`);
