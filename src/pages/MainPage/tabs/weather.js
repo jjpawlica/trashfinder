@@ -7,7 +7,7 @@ const WeatherTab = () => {
     <>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Weather</IonTitle>
+          <IonTitle>Pogoda</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
