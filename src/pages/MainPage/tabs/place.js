@@ -19,7 +19,8 @@ import {
   IonAvatar,
   IonThumbnail,
   IonTextarea,
-  IonText
+  IonText,
+  IonDatetime
 } from '@ionic/react';
 
 import { Marker } from 'google-maps-react';
@@ -49,6 +50,7 @@ const PlaceTab = ({ match, history }) => {
   const [usersCount, setUsersCount] = useState(0);
 
   const [canJoin, setCanJoin] = useState(false);
+  const [cleaningDate, setCleaningDate] = useState();
 
   const [comment, setComment] = useState('');
 
@@ -69,7 +71,12 @@ const PlaceTab = ({ match, history }) => {
         setStatus(place.status);
         setUsers(place.users);
         setUsersCount(place.users.length);
-        setCreatedAt(place.createdAt.toDate().toLocaleDateString('pl-PL'));
+        setCreatedAt(place.createdAt.toDate().toISOString());
+
+        console.log(place.cleaningDate);
+        if (place.cleaningDate) {
+          setCleaningDate(place.cleaningDate.toDate().toISOString());
+        }
 
         const userRef = await firebase.db
           .collection('users')
@@ -131,6 +138,20 @@ const PlaceTab = ({ match, history }) => {
     }
   };
 
+  const handleDateChange = async event => {
+    const dateToUpdate = event.currentTarget.value;
+    try {
+      await firebase.db
+        .collection('places')
+        .doc(id)
+        .update({ cleaningDate: firebase.Timestamp.fromDate(new Date(dateToUpdate)) });
+
+      setCleaningDate(dateToUpdate);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <IonHeader>
@@ -141,20 +162,18 @@ const PlaceTab = ({ match, history }) => {
       <IonContent fullscreen>
         <IonGrid fixed>
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10" style={{ height: '50vh' }}>
+            <IonCol size="11" style={{ height: '50vh' }}>
               <MapContainer lat={lat} lng={lng} center={{ lat, lng }}>
                 <Marker position={{ lat, lng }} />
               </MapContainer>
             </IonCol>
           </IonRow>
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10">
+            <IonCol size="12">
               <IonCard>
                 <IonCardHeader>
                   <IonItem>
-                    <IonLabel>
-                      <h1>{name}</h1>
-                    </IonLabel>
+                    <IonLabel>{name}</IonLabel>
                     {user.uid === createdBy && (
                       <IonButton fill="clear" slot="end">
                         EDYTUJ
@@ -165,19 +184,20 @@ const PlaceTab = ({ match, history }) => {
                 <IonCardContent>
                   <IonList>
                     <IonItem>
-                      <p>
-                        Szerokośc: {parseFloat(lat).toFixed(4)} Wysokosć:{' '}
-                        {parseFloat(lng).toFixed(4)}
-                      </p>
+                      <IonLabel>Opis: {description}</IonLabel>
                     </IonItem>
                     <IonItem>
-                      <p>Opis: {description}</p>
+                      <IonLabel>Szerokośc: {parseFloat(lat).toFixed(4)}</IonLabel>
                     </IonItem>
+                    <IonItem>
+                      <IonLabel>Wysokosć: {parseFloat(lng).toFixed(4)}</IonLabel>
+                    </IonItem>
+
                     <IonItem>
                       {status ? (
-                        <p style={{ color: 'green' }}>Status: posprzątane</p>
+                        <IonLabel style={{ color: 'green' }}>Status: posprzątane</IonLabel>
                       ) : (
-                        <p style={{ color: 'red' }}>Status: nie posprzątane</p>
+                        <IonLabel style={{ color: 'red' }}>Status: nie posprzątane</IonLabel>
                       )}
                       {user.uid === createdBy && (
                         <IonButton fill="clear" slot="end" onClick={handleChanceStatus}>
@@ -185,10 +205,17 @@ const PlaceTab = ({ match, history }) => {
                         </IonButton>
                       )}
                     </IonItem>
-                    <IonItem color="primary">
-                      <p>
-                        Utrzorzone w dniu {createdAt} przez {createdByUsername}
-                      </p>
+                    <IonItem>
+                      <IonLabel>Utrzorzone</IonLabel>
+                      <IonDatetime
+                        displayFormat="MMM DD, YYYY HH:mm"
+                        slot="end"
+                        value={createdAt}
+                      />
+                    </IonItem>
+                    <IonItem>
+                      <IonLabel>Przez</IonLabel>
+                      <IonText slot="end">{createdByUsername}</IonText>
                     </IonItem>
                   </IonList>
                 </IonCardContent>
@@ -197,13 +224,11 @@ const PlaceTab = ({ match, history }) => {
           </IonRow>
 
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10">
+            <IonCol size="12">
               <IonCard>
                 <IonCardHeader>
                   <IonItem>
-                    <IonLabel>
-                      <h1>Zdjęcia</h1>
-                    </IonLabel>
+                    <IonLabel>Zdjęcia</IonLabel>
                     <IonButton fill="clear" slot="end">
                       Dodaj zdjęcie
                     </IonButton>
@@ -244,14 +269,17 @@ const PlaceTab = ({ match, history }) => {
           </IonRow>
 
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10">
+            <IonCol size="12">
               <IonCard>
                 <IonCardHeader>
                   <IonItem>
                     <IonGrid>
                       <IonRow>
-                        {users.slice(0, 5).map(() => (
-                          <IonAvatar style={{ marginLeft: '4px', width: '32px', height: '32px' }}>
+                        {users.slice(0, 2).map(item => (
+                          <IonAvatar
+                            style={{ marginLeft: '4px', width: '32px', height: '32px' }}
+                            key={item}
+                          >
                             <img src={avatar} alt="avatar" />
                           </IonAvatar>
                         ))}
@@ -272,10 +300,17 @@ const PlaceTab = ({ match, history }) => {
                 <IonCardContent>
                   <IonList>
                     <IonItem>
-                      <p>Chętynch: {usersCount}</p>
+                      <IonLabel>Chętynch: {usersCount}</IonLabel>
                     </IonItem>
                     <IonItem>
-                      <p>W dniu: 15.06.2019</p>
+                      <IonLabel>{cleaningDate ? 'W dniu' : 'Dodaj datę'}</IonLabel>
+                      <IonDatetime
+                        displayFormat="MMM DD, YYYY HH:mm"
+                        pickerFormat="MMM DD YYYY HH:mm"
+                        slot="end"
+                        value={cleaningDate}
+                        onIonChange={handleDateChange}
+                      />
                     </IonItem>
                   </IonList>
                 </IonCardContent>
