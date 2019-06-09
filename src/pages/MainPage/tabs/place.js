@@ -46,8 +46,9 @@ const PlaceTab = ({ match, history }) => {
   const [createdBy, setCreatedBy] = useState('');
   const [createdByUsername, setCreatedByUsername] = useState('');
   const [users, setUsers] = useState([]);
+  const [usersCount, setUsersCount] = useState(0);
 
-  const [canJoin, setCanJoin] = useState(true);
+  const [canJoin, setCanJoin] = useState(false);
 
   const [comment, setComment] = useState('');
 
@@ -67,6 +68,7 @@ const PlaceTab = ({ match, history }) => {
         setDescritpion(place.description);
         setStatus(place.status);
         setUsers(place.users);
+        setUsersCount(place.users.length);
         setCreatedAt(place.createdAt.toDate().toLocaleDateString('pl-PL'));
 
         const userRef = await firebase.db
@@ -75,6 +77,8 @@ const PlaceTab = ({ match, history }) => {
           .get();
         setCreatedBy(userRef.id);
         setCreatedByUsername(userRef.data().username);
+
+        setCanJoin(place.users.includes(user.uid));
       } else {
         history.push('/places');
       }
@@ -99,6 +103,32 @@ const PlaceTab = ({ match, history }) => {
 
   const handleEventJoin = async event => {
     event.preventDefault();
+    try {
+      await firebase.db
+        .collection('places')
+        .doc(id)
+        .update({ users: firebase.arrayUnion(user.uid) });
+
+      setCanJoin(!canJoin);
+      setUsersCount(usersCount + 1);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleEventQuit = async event => {
+    event.preventDefault();
+    try {
+      await firebase.db
+        .collection('places')
+        .doc(id)
+        .update({ users: firebase.arrayRemove(user.uid) });
+
+      setCanJoin(!canJoin);
+      setUsersCount(usersCount - 1);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -225,18 +255,24 @@ const PlaceTab = ({ match, history }) => {
                             <img src={avatar} alt="avatar" />
                           </IonAvatar>
                         ))}
-                        {users.length > 5 && <IonText>...</IonText>}
+                        {usersCount > 5 && <IonText>...</IonText>}
                       </IonRow>
                     </IonGrid>
-                    <IonButton fill="clear" slot="end">
-                      DOŁĄCZ DO SPRZĄTANIA
-                    </IonButton>
+                    {canJoin ? (
+                      <IonButton fill="clear" slot="end" color="danger" onClick={handleEventQuit}>
+                        ZREZYGNUJ
+                      </IonButton>
+                    ) : (
+                      <IonButton fill="clear" slot="end" color="success" onClick={handleEventJoin}>
+                        DOŁĄCZ DO SPRZĄTANIA
+                      </IonButton>
+                    )}
                   </IonItem>
                 </IonCardHeader>
                 <IonCardContent>
                   <IonList>
                     <IonItem>
-                      <p>Chętynch: {users.length}</p>
+                      <p>Chętynch: {usersCount}</p>
                     </IonItem>
                     <IonItem>
                       <p>W dniu: 15.06.2019</p>

@@ -1,6 +1,7 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { thisTypeAnnotation } from '@babel/types';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -19,6 +20,9 @@ class Firebase {
     this.db = firebase.firestore();
 
     this.timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    this.arrayUnion = firebase.firestore.FieldValue.arrayUnion;
+    this.arrayRemove = firebase.firestore.FieldValue.arrayRemove;
+
     this.GeoPoint = firebase.firestore.GeoPoint;
 
     this.googleProvider = new firebase.auth.GoogleAuthProvider();
