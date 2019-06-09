@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { useCollection } from 'react-firebase-hooks/firestore';
 
+import { Plugins, CameraResultType, FilesystemDirectory } from '@capacitor/core';
+
 import {
   IonHeader,
   IonToolbar,
@@ -32,6 +34,8 @@ import UserContext from '../../../components/User/context';
 import MapContainer from '../../../components/Map/add';
 
 const PlaceTab = ({ match, history }) => {
+  const { Camera, Filesystem } = Plugins;
+
   const { id } = match.params;
 
   const firebase = useContext(FirebaseContext);
@@ -245,7 +249,7 @@ const PlaceTab = ({ match, history }) => {
                 <IonCardHeader>
                   <IonItem>
                     <IonLabel>Zdjęcia</IonLabel>
-                    <IonButton fill="clear" slot="end">
+                    <IonButton fill="clear" slot="end" onClick={() => console.log('ADD PHOTO')}>
                       Dodaj zdjęcie
                     </IonButton>
                   </IonItem>
@@ -257,23 +261,7 @@ const PlaceTab = ({ match, history }) => {
                         <IonThumbnail>
                           <img
                             src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-                            alt="pic"
-                          />
-                        </IonThumbnail>
-                      </IonCol>
-                      <IonCol size="4">
-                        <IonThumbnail>
-                          <img
-                            src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-                            alt="pic"
-                          />
-                        </IonThumbnail>
-                      </IonCol>
-                      <IonCol size="4">
-                        <IonThumbnail>
-                          <img
-                            src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-                            alt="pic"
+                            alt="thumb"
                           />
                         </IonThumbnail>
                       </IonCol>

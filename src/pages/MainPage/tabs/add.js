@@ -109,7 +109,7 @@ const AddPlaceTab = ({ history }) => {
         <IonGrid fixed>
           <IonRow align-items-center justify-content-center>
             <IonCol size="11" style={{ height: '50vh' }}>
-              <MapContainer onClick={handleMapClick} lat={lat} lng={lng}>
+              <MapContainer onClick={handleMapClick} lat={lat} lng={lng} center={{ lat, lng }}>
                 <Marker position={{ lat, lng }} />
               </MapContainer>
             </IonCol>

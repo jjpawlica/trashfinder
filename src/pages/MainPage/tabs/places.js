@@ -103,7 +103,7 @@ const PlacesTab = ({ history }) => {
       <IonContent fullscreen>
         <IonGrid fixed>
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10" style={{ height: '50vh' }}>
+            <IonCol size="11" style={{ height: '50vh' }}>
               <PlacesMap points={points}>
                 {places.map(place => (
                   <Marker key={place.id} position={{ lat: place.lat, lng: place.lng }} />
@@ -113,7 +113,7 @@ const PlacesTab = ({ history }) => {
           </IonRow>
           <IonRow align-items-center justify-content-center>
             {places.map(place => (
-              <IonCol size="10" key={place.id}>
+              <IonCol size="12" key={place.id}>
                 <PlaceItem place={place} history={history} />
               </IonCol>
             ))}
