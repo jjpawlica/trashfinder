@@ -17,7 +17,8 @@ import {
   IonButton,
   IonLabel,
   IonAvatar,
-  IonThumbnail
+  IonThumbnail,
+  IonTextarea
 } from '@ionic/react';
 
 import { Marker } from 'google-maps-react';
@@ -39,9 +40,12 @@ const PlaceTab = ({ match, history }) => {
   const [lng, setLng] = useState();
   const [name, setName] = useState('');
   const [description, setDescritpion] = useState('');
+  const [status, setStatus] = useState(false);
   const [createdAt, setCreatedAt] = useState('');
   const [createdBy, setCreatedBy] = useState('');
   const [createdByUsername, setCreatedByUsername] = useState('');
+
+  const [comment, setComment] = useState('');
 
   // Check if place exists
   useEffect(() => {
@@ -57,7 +61,8 @@ const PlaceTab = ({ match, history }) => {
         setLng(place.location.longitude);
         setName(place.name);
         setDescritpion(place.description);
-        setCreatedAt(place.createAt.toDate().toLocaleDateString('pl-PL'));
+        setStatus(place.status);
+        setCreatedAt(place.createdAt.toDate().toLocaleDateString('pl-PL'));
 
         const userRef = await firebase.db
           .collection('users')
@@ -72,6 +77,20 @@ const PlaceTab = ({ match, history }) => {
     fetchPlace();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleChanceStatus = async event => {
+    event.preventDefault();
+    try {
+      await firebase.db
+        .collection('places')
+        .doc(id)
+        .update({ status: !status });
+
+      setStatus(!status);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -114,6 +133,18 @@ const PlaceTab = ({ match, history }) => {
                     </IonItem>
                     <IonItem>
                       <p>Opis: {description}</p>
+                    </IonItem>
+                    <IonItem>
+                      {status ? (
+                        <p style={{ color: 'red' }}>Status: posprzątane</p>
+                      ) : (
+                        <p style={{ color: 'green' }}>Status: nie posprzątane</p>
+                      )}
+                      {user.uid === createdBy && (
+                        <IonButton fill="clear" slot="end" onClick={handleChanceStatus}>
+                          ZMIEŃ
+                        </IonButton>
+                      )}
                     </IonItem>
                     <IonItem color="primary">
                       <p>
@@ -195,6 +226,43 @@ const PlaceTab = ({ match, history }) => {
                     </IonItem>
                     <IonItem>
                       <p>W dniu: 15.06.2019</p>
+                    </IonItem>
+                  </IonList>
+                </IonCardContent>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+
+          <IonRow align-items-center justify-content-center>
+            <IonCol size="10">
+              <IonCard>
+                <IonCardHeader>
+                  <IonItem>
+                    <IonLabel>
+                      <h1>Komentarze (15)</h1>
+                    </IonLabel>
+                  </IonItem>
+                </IonCardHeader>
+                <IonCardContent>
+                  <IonList>
+                    <IonItem>
+                      <IonTextarea
+                        required
+                        placeholder="Dodaj komentarz"
+                        name="comment"
+                        maxlength="200"
+                        value={comment}
+                        onIonChange={e => console.log(e.currentTarget.value)}
+                      />
+                    </IonItem>
+                    <IonButton style={{ marginTop: '32px' }} expand="block">
+                      Dodaj komentarz
+                    </IonButton>
+                    <IonItem>
+                      <p>Komentarz 1</p>
+                    </IonItem>
+                    <IonItem>
+                      <p>Komentarz 2</p>
                     </IonItem>
                   </IonList>
                 </IonCardContent>
