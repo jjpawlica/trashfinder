@@ -1,7 +1,19 @@
 import React from 'react';
 
 // import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
-import { IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonItemSliding, IonItemOption, IonItemOptions } from '@ionic/react';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonCard,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCardContent,
+  IonList,
+  IonItem,
+  IonLabel
+} from '@ionic/react';
 
 
 const WeatherTab = () => {
