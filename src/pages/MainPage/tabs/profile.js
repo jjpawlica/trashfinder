@@ -17,7 +17,7 @@ import UserContext from '../../../components/User/context';
 
 import avatar from '../../../images/avatar.svg';
 
-const ProfileTab = () => {
+const ProfileTab = ({ history }) => {
   const firebase = useContext(FirebaseContext);
   const { user } = useContext(UserContext);
   const { email, photoURL } = user;
@@ -84,7 +84,7 @@ const ProfileTab = () => {
           </IonRow>
           <IonRow justify-content-center>
             <IonCol size="10">
-              <IonButton expand="block" href="/profile/edit">
+              <IonButton expand="block" onClick={() => history.push('/profile/edit')}>
                 Edytuj profil
               </IonButton>
               <IonButton expand="block" fill="clear" onClick={handleSingout}>

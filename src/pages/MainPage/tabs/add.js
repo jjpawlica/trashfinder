@@ -101,8 +101,8 @@ const AddPlaceTab = ({ history }) => {
   return (
     <>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Add Place</IonTitle>
+        <IonToolbar color="primary">
+          <IonTitle>Dodaj miejsce</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -117,20 +117,37 @@ const AddPlaceTab = ({ history }) => {
           <IonRow align-items-center justify-content-center>
             <IonCol size="12">
               <IonCard>
-                <IonCardHeader>
-                  {error && (
-                    <IonItem color="dange">
-                      <p>{error}</p>
-                    </IonItem>
-                  )}
-                  <IonItem>
-                    <h3>Lat: {lat} </h3>
-                  </IonItem>
-                  <IonItem>
-                    <h3>Lng: {lng}</h3>
-                  </IonItem>
+                <IonCardHeader color="primary">
+                  <IonLabel>Dodaj nowe miejsce</IonLabel>
                 </IonCardHeader>
+
                 <IonCardContent>
+                  <IonItem>
+                    <IonLabel position="floating" color="primary">
+                      Szerokość
+                    </IonLabel>
+                    <IonInput
+                      autofocus
+                      required
+                      placeholder="Szerokość"
+                      name="latitude"
+                      value={lat}
+                      disabled
+                    />
+                  </IonItem>
+                  <IonItem>
+                    <IonLabel position="floating" color="primary">
+                      Długość
+                    </IonLabel>
+                    <IonInput
+                      autofocus
+                      required
+                      placeholder="Długość"
+                      name="longitude"
+                      value={lng}
+                      disabled
+                    />
+                  </IonItem>
                   <IonItem>
                     <IonLabel position="floating" color="primary">
                       Nazwa miejsca / Adres
