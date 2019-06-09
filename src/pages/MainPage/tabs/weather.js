@@ -12,11 +12,89 @@ import {
   IonCardContent,
   IonList,
   IonItem,
-  IonLabel
+  IonLabel,
+  IonGrid, IonRow, IonCol ,
+  IonImg
 } from '@ionic/react';
 
 
+
+// test(() => {
+//   console.log('testt');
+// }, []);
+
 const WeatherTab = () => {
+
+  const latitude = 50.0646501;
+  const longitude = 19.9449799
+
+
+
+  const getCurrentWeather = (lat, lon) => {
+    const apiId = process.env.REACT_APP_WEATHER_API_ID;
+
+    let apiUrl = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+apiId+'&units=metric';
+    
+    console.log(apiUrl);
+    fetch(apiUrl)
+    .then(response => {
+      return response.json()
+    })
+    .then(data => {
+      // console.log(data);
+
+      document.getElementById('cityName').innerText = data.name;
+
+      document.getElementById('lat').innerText = data.coord.lat;
+      document.getElementById('lon').innerText = data.coord.lon;
+
+      // let temperatureCelsius = ((data.main.temp - 32) / 180).toPrecision(3);
+      document.getElementById('temperature').innerText = data.main.temp+' ℃';
+
+      let iconUrl = 'http://openweathermap.org/img/w/'+data.weather[0].icon+'.png';
+      document.getElementById('weather-icon').src = iconUrl;
+    })
+    .catch(err => {
+      console.log(err)
+    });
+  }
+
+
+  const getForecastWeather = (lat, lon) => {
+    const apiId = process.env.REACT_APP_WEATHER_API_ID;
+
+    let apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+apiId+'&units=metric';
+    
+    console.log(apiUrl);
+    fetch(apiUrl)
+    .then(response => {
+      return response.json()
+    })
+    .then(data => {
+      // console.log(data);
+      let list = document.getElementById('forecastList');
+      data.list.forEach(function(item){
+        let el = document.createElement('IonItem');
+        el.innerHTML = '<IonLabel>Test</IonLabel>';
+
+        list.appendChild(el);
+      });
+
+    })
+    .catch(err => {
+      console.log(err)
+    });
+  }
+
+
+
+
+  getCurrentWeather(latitude, longitude);
+
+  getForecastWeather(latitude, longitude);
+
+
+
   return (
   <>
     <IonHeader>
@@ -24,34 +102,43 @@ const WeatherTab = () => {
         <IonTitle>Prognoza pogody</IonTitle>
       </IonToolbar>
     </IonHeader>
-    {/* <IonList>
-      <ion-list-header>
-        <ion-label>Items</ion-label>
-      </ion-list-header>
-      <IonItem> */}
-        <IonCard>
-          <IonCardHeader>
-            <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-            <IonCardTitle>Card Title</IonCardTitle>
-          </IonCardHeader>
 
-          <IonCardContent>
-            Keep close to Nature's heart... and break clear away, once in awhile,
-            and climb a mountain or spend a week in the woods. Wash your spirit clean.
-          </IonCardContent>
-        </IonCard>
-      {/* </IonItem>
-    </IonList> */}
+    <IonCard>
+      <IonCardHeader>
+      <IonGrid>
+        <IonRow>
+          <IonCol>
+            <IonCardSubtitle>Prognoza pogody dla: <strong id="cityName"></strong></IonCardSubtitle>
+          </IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol>
+            <IonCardSubtitle><IonCardTitle id="temperature"></IonCardTitle></IonCardSubtitle>
+          </IonCol>
+          <IonCol>
+            <IonCardSubtitle><IonImg id="weather-icon" class="weather-icon" src="http://openweathermap.org/img/w/01d.png"></IonImg></IonCardSubtitle>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+      </IonCardHeader>
 
-    <IonList>
+      <IonCardContent>
+        Twoje położenie:<br />
+        Szerokość geograficzna: <strong id="lat"></strong>,
+        <br />
+        Długość geograficzna: <strong id="lon"></strong>
+      </IonCardContent>
+    </IonCard>
+
+    <IonList id="forecastList">
       <ion-list-header>
-        <ion-label>Prognoza dla największych miast w Polsce:</ion-label>
+        <ion-label>Progoda w Krakowie w najbliższym czasie...:</ion-label>
       </ion-list-header>
-      <IonItem>
-        <IonLabel>Warszawa: </IonLabel>
+      {/* <IonItem>
+        <IonLabel>12 stopni: </IonLabel>
       </IonItem>
       <IonItem>
-        <IonLabel>Kraków: </IonLabel>
+        <IonLabel>10 stopni: </IonLabel>
       </IonItem>
       <IonItem>
         <IonLabel>Gdańsk</IonLabel>
@@ -61,8 +148,8 @@ const WeatherTab = () => {
       </IonItem>
       <IonItem>
         <IonLabel>Wrocław</IonLabel>
-      </IonItem>
-    </IonList>
+      </IonItem>*/}
+    </IonList> 
   </>
   );
 };
