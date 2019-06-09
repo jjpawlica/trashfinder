@@ -18,7 +18,6 @@ import {
   IonCardContent,
   IonButton,
   IonLabel,
-  IonAvatar,
   IonThumbnail,
   IonTextarea,
   IonText,
@@ -31,8 +30,6 @@ import FirebaseContext from '../../../components/Firebase/context';
 import UserContext from '../../../components/User/context';
 
 import MapContainer from '../../../components/Map/add';
-
-import avatar from '../../../images/avatar.svg';
 
 const PlaceTab = ({ match, history }) => {
   const { id } = match.params;
@@ -197,11 +194,6 @@ const PlaceTab = ({ match, history }) => {
                 <IonCardHeader>
                   <IonItem>
                     <IonLabel>{name}</IonLabel>
-                    {user.uid === createdBy && (
-                      <IonButton fill="clear" slot="end">
-                        EDYTUJ
-                      </IonButton>
-                    )}
                   </IonItem>
                 </IonCardHeader>
                 <IonCardContent>
@@ -218,9 +210,9 @@ const PlaceTab = ({ match, history }) => {
 
                     <IonItem>
                       {status ? (
-                        <IonLabel style={{ color: 'green' }}>Status: posprzątane</IonLabel>
+                        <IonLabel style={{ color: 'green' }}>posprzątane</IonLabel>
                       ) : (
-                        <IonLabel style={{ color: 'red' }}>Status: nie posprzątane</IonLabel>
+                        <IonLabel style={{ color: 'red' }}> nie posprzątane</IonLabel>
                       )}
                       {user.uid === createdBy && (
                         <IonButton fill="clear" slot="end" onClick={handleChanceStatus}>
@@ -229,11 +221,12 @@ const PlaceTab = ({ match, history }) => {
                       )}
                     </IonItem>
                     <IonItem>
-                      <IonLabel>Utrzorzone</IonLabel>
+                      <IonLabel>Stworzono</IonLabel>
                       <IonDatetime
-                        displayFormat="MMM DD, YYYY HH:mm"
+                        displayFormat="MMM DD, YYYY"
                         slot="end"
                         value={createdAt}
+                        readonly
                       />
                     </IonItem>
                     <IonItem>
