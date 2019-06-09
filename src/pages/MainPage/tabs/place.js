@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 
+import { useCollection } from 'react-firebase-hooks/firestore';
+
 import {
   IonHeader,
   IonToolbar,
@@ -54,6 +56,13 @@ const PlaceTab = ({ match, history }) => {
 
   const [comment, setComment] = useState('');
 
+  const [comments, loading, error] = useCollection(
+    firebase.db.collection('comments').where('place', '==', id),
+    {
+      includeMetadataChanges: true
+    }
+  );
+
   // Check if place exists
   useEffect(() => {
     const fetchPlace = async () => {
@@ -73,7 +82,6 @@ const PlaceTab = ({ match, history }) => {
         setUsersCount(place.users.length);
         setCreatedAt(place.createdAt.toDate().toISOString());
 
-        console.log(place.cleaningDate);
         if (place.cleaningDate) {
           setCleaningDate(place.cleaningDate.toDate().toISOString());
         }
@@ -319,12 +327,12 @@ const PlaceTab = ({ match, history }) => {
           </IonRow>
 
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10">
+            <IonCol size="12">
               <IonCard>
                 <IonCardHeader>
                   <IonItem>
                     <IonLabel>
-                      <h1>Komentarze (15)</h1>
+                      <h1>Komentarze ({comments && comments.docs.length})</h1>
                     </IonLabel>
                   </IonItem>
                 </IonCardHeader>
@@ -343,12 +351,12 @@ const PlaceTab = ({ match, history }) => {
                     <IonButton style={{ marginTop: '32px' }} expand="block">
                       Dodaj komentarz
                     </IonButton>
-                    <IonItem>
-                      <p>Komentarz 1</p>
-                    </IonItem>
-                    <IonItem>
-                      <p>Komentarz 2</p>
-                    </IonItem>
+                    {comments &&
+                      comments.docs.map(doc => (
+                        <IonItem key={doc.id}>
+                          <p>{doc.data().body}</p>
+                        </IonItem>
+                      ))}
                   </IonList>
                 </IonCardContent>
               </IonCard>

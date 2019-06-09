@@ -88,7 +88,7 @@ const AddPlaceTab = ({ history }) => {
         location: new firebase.GeoPoint(lat, lng),
         user: user.uid,
         status: false,
-        createAt: firebase.timestamp,
+        createdAt: firebase.timestamp,
         users: [user.uid]
       });
 
@@ -108,14 +108,14 @@ const AddPlaceTab = ({ history }) => {
       <IonContent fullscreen>
         <IonGrid fixed>
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10" style={{ height: '50vh' }}>
+            <IonCol size="11" style={{ height: '50vh' }}>
               <MapContainer onClick={handleMapClick} lat={lat} lng={lng}>
                 <Marker position={{ lat, lng }} />
               </MapContainer>
             </IonCol>
           </IonRow>
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10">
+            <IonCol size="12">
               <IonCard>
                 <IonCardHeader>
                   {error && (
