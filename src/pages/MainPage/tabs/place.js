@@ -296,26 +296,14 @@ const PlaceTab = ({ match, history }) => {
               <IonCard>
                 <IonCardHeader>
                   <IonItem>
-                    <IonGrid>
-                      <IonRow>
-                        {users.slice(0, 2).map(item => (
-                          <IonAvatar
-                            style={{ marginLeft: '4px', width: '32px', height: '32px' }}
-                            key={item}
-                          >
-                            <img src={avatar} alt="avatar" />
-                          </IonAvatar>
-                        ))}
-                        {usersCount > 5 && <IonText>...</IonText>}
-                      </IonRow>
-                    </IonGrid>
+                    <IonLabel>Sprzątanie</IonLabel>
                     {canJoin ? (
                       <IonButton fill="clear" slot="end" color="danger" onClick={handleEventQuit}>
                         ZREZYGNUJ
                       </IonButton>
                     ) : (
                       <IonButton fill="clear" slot="end" color="success" onClick={handleEventJoin}>
-                        DOŁĄCZ DO SPRZĄTANIA
+                        DOŁĄCZ
                       </IonButton>
                     )}
                   </IonItem>
