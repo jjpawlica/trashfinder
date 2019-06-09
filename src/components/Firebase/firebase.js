@@ -19,6 +19,11 @@ class Firebase {
     this.db = firebase.firestore();
 
     this.timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    this.arrayUnion = firebase.firestore.FieldValue.arrayUnion;
+    this.arrayRemove = firebase.firestore.FieldValue.arrayRemove;
+
+    this.GeoPoint = firebase.firestore.GeoPoint;
+    this.Timestamp = firebase.firestore.Timestamp;
 
     this.googleProvider = new firebase.auth.GoogleAuthProvider();
   }

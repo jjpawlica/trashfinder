@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 import {
   IonHeader,
@@ -14,45 +16,18 @@ import {
   IonCard,
   IonCardHeader,
   IonCardContent,
-  IonIcon,
-  IonAvatar
+  IonLabel,
+  IonText
 } from '@ionic/react';
 
 import { Marker } from 'google-maps-react';
 
 import PlacesMap from '../../../components/Map/list';
 
-const places = [
-  {
-    id: 1,
-    lat: 45.5080397,
-    lng: -73.564543
-  },
-  {
-    id: 2,
-    lat: -10.7397921,
-    lng: -37.809338
-  },
-  {
-    id: 3,
-    lat: 41.9238499,
-    lng: 20.3755648
-  },
-  {
-    id: 4,
-    lat: 41.05,
-    lng: -73.54
-  },
-  {
-    id: 5,
-    lat: 15.252,
-    lng: 120.0169
-  }
-];
+import FirebaseContext from '../../../components/Firebase/context';
+import UserContext from '../../../components/User/context';
 
-const PlaceItem = ({ place, history }) => {
-  const { id, lng, lat } = place;
-
+const PlaceItem = ({ place, id, history }) => {
   const goToLink = async event => {
     if (!event.currentTarget) {
       return;
@@ -64,21 +39,29 @@ const PlaceItem = ({ place, history }) => {
   return (
     <IonCard>
       <IonCardHeader>
-        <IonItem button detail={false} href={`/places/place/${place.id}`} onClick={goToLink}>
-          <IonAvatar slot="start">
-            <IonIcon name="locate" />
-          </IonAvatar>
-          {id}
+        <IonItem button detail={false} href={`/places/place/${id}`} onClick={goToLink}>
+          <h1>{place.name}</h1>
         </IonItem>
       </IonCardHeader>
 
       <IonCardContent>
         <IonList>
           <IonItem>
-            <h3>Long: {lng}</h3>
+            <IonLabel>Opis: {place.description}</IonLabel>
           </IonItem>
           <IonItem>
-            <h3>Lat: {lat}</h3>
+            <IonLabel>Szerokośc: {parseFloat(place.location.latitude).toFixed(4)}</IonLabel>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Wysokosć: {parseFloat(place.location.longitude).toFixed(4)}</IonLabel>
+          </IonItem>
+
+          <IonItem>
+            {place.status ? (
+              <IonLabel style={{ color: 'green' }}>posprzątane</IonLabel>
+            ) : (
+              <IonLabel style={{ color: 'red' }}> nie posprzątane</IonLabel>
+            )}
           </IonItem>
         </IonList>
       </IonCardContent>
@@ -87,12 +70,34 @@ const PlaceItem = ({ place, history }) => {
 };
 
 const PlacesTab = ({ history }) => {
-  const points = places.map(place => {
-    const point = {};
-    point.lat = place.lat;
-    point.lng = place.lng;
-    return point;
-  });
+  const firebase = useContext(FirebaseContext);
+  const { user } = useContext(UserContext);
+
+  const [places, loading, error] = useCollection(
+    firebase.db
+      .collection('places')
+      .orderBy('createdAt', 'desc')
+      .limit(5),
+    {
+      includeMetadataChanges: true
+    }
+  );
+
+  const [points, setPoints] = useState([]);
+
+  useEffect(() => {
+    if (places) {
+      const newPoints = places.docs.map(doc => {
+        const point = {};
+        point.lat = doc.data().location.latitude;
+        point.lng = doc.data().location.longitude;
+        return point;
+      });
+
+      setPoints(newPoints);
+    }
+  }, [places]);
+
   return (
     <>
       <IonHeader>
@@ -103,20 +108,31 @@ const PlacesTab = ({ history }) => {
       <IonContent fullscreen>
         <IonGrid fixed>
           <IonRow align-items-center justify-content-center>
-            <IonCol size="10" style={{ height: '50vh' }}>
-              <PlacesMap points={points}>
-                {places.map(place => (
-                  <Marker key={place.id} position={{ lat: place.lat, lng: place.lng }} />
-                ))}
-              </PlacesMap>
+            <IonCol size="11" style={{ height: '50vh' }}>
+              {places ? (
+                <PlacesMap points={points}>
+                  {places.docs.map(doc => (
+                    <Marker
+                      key={doc.id}
+                      position={{
+                        lat: doc.data().location.latitude,
+                        lng: doc.data().location.longitude
+                      }}
+                    />
+                  ))}
+                </PlacesMap>
+              ) : (
+                <IonText>Brak miejsc do wyświetlenia</IonText>
+              )}
             </IonCol>
           </IonRow>
           <IonRow align-items-center justify-content-center>
-            {places.map(place => (
-              <IonCol size="10" key={place.id}>
-                <PlaceItem place={place} history={history} />
-              </IonCol>
-            ))}
+            {places &&
+              places.docs.map(doc => (
+                <IonCol size="12" key={doc.id}>
+                  <PlaceItem id={doc.id} place={doc.data()} history={history} />
+                </IonCol>
+              ))}
           </IonRow>
         </IonGrid>
       </IonContent>
