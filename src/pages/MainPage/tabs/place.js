@@ -160,6 +160,21 @@ const PlaceTab = ({ match, history }) => {
     }
   };
 
+  const handleAddComment = async event => {
+    event.preventDefault();
+    try {
+      await firebase.db.collection('comments').add({
+        body: comment,
+        place: id,
+        createdAt: firebase.timestamp,
+        createdBy: user.uid
+      });
+      setComment('');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <IonHeader>
@@ -345,10 +360,14 @@ const PlaceTab = ({ match, history }) => {
                         name="comment"
                         maxlength="200"
                         value={comment}
-                        onIonChange={e => console.log(e.currentTarget.value)}
+                        onIonChange={e => setComment(e.currentTarget.value)}
                       />
                     </IonItem>
-                    <IonButton style={{ marginTop: '32px' }} expand="block">
+                    <IonButton
+                      style={{ marginTop: '32px' }}
+                      expand="block"
+                      onClick={handleAddComment}
+                    >
                       Dodaj komentarz
                     </IonButton>
                     {comments &&
