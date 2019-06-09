@@ -164,7 +164,7 @@ const ProfileEditTab = ({ history }) => {
                 Zapisz zmiany
               </IonButton>
 
-              <IonButton expand="block" fill="clear" href="/profile">
+              <IonButton expand="block" fill="clear" onClick={() => history.push('/profile')}>
                 Odrzuć zmiany
               </IonButton>
             </IonCol>

@@ -33,15 +33,13 @@ const PlaceItem = ({ place, id, history }) => {
       return;
     }
     event.preventDefault();
-    history.push(event.currentTarget.href);
+    history.push(`/places/place/${id}`);
   };
 
   return (
     <IonCard>
-      <IonCardHeader>
-        <IonItem button detail={false} href={`/places/place/${id}`} onClick={goToLink}>
-          <h1>{place.name}</h1>
-        </IonItem>
+      <IonCardHeader color="primary" onClick={goToLink}>
+        <IonLabel>{place.name}</IonLabel>
       </IonCardHeader>
 
       <IonCardContent>
@@ -56,13 +54,15 @@ const PlaceItem = ({ place, id, history }) => {
             <IonLabel>Wysokosć: {parseFloat(place.location.longitude).toFixed(4)}</IonLabel>
           </IonItem>
 
-          <IonItem>
-            {place.status ? (
-              <IonLabel style={{ color: 'green' }}>posprzątane</IonLabel>
-            ) : (
-              <IonLabel style={{ color: 'red' }}> nie posprzątane</IonLabel>
-            )}
-          </IonItem>
+          {place.status ? (
+            <IonItem lines="none" color="success">
+              <IonLabel>posprzątane</IonLabel>
+            </IonItem>
+          ) : (
+            <IonItem lines="none" color="danger">
+              <IonLabel> nie posprzątane</IonLabel>
+            </IonItem>
+          )}
         </IonList>
       </IonCardContent>
     </IonCard>
@@ -101,7 +101,7 @@ const PlacesTab = ({ history }) => {
   return (
     <>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="primary">
           <IonTitle>Places</IonTitle>
         </IonToolbar>
       </IonHeader>

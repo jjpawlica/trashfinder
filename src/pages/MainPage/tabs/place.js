@@ -175,8 +175,8 @@ const PlaceTab = ({ match, history }) => {
   return (
     <>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>{name}</IonTitle>
+        <IonToolbar color="primary">
+          <IonTitle>Miejsce: {name}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -191,10 +191,8 @@ const PlaceTab = ({ match, history }) => {
           <IonRow align-items-center justify-content-center>
             <IonCol size="12">
               <IonCard>
-                <IonCardHeader>
-                  <IonItem>
-                    <IonLabel>{name}</IonLabel>
-                  </IonItem>
+                <IonCardHeader color="primary">
+                  <IonLabel>Nazwa: {name}</IonLabel>
                 </IonCardHeader>
                 <IonCardContent>
                   <IonList>
@@ -210,9 +208,9 @@ const PlaceTab = ({ match, history }) => {
 
                     <IonItem>
                       {status ? (
-                        <IonLabel style={{ color: 'green' }}>posprzątane</IonLabel>
+                        <IonLabel color="success">posprzątane</IonLabel>
                       ) : (
-                        <IonLabel style={{ color: 'red' }}> nie posprzątane</IonLabel>
+                        <IonLabel color="danger"> nie posprzątane</IonLabel>
                       )}
                       {user.uid === createdBy && (
                         <IonButton fill="clear" slot="end" onClick={handleChanceStatus}>
@@ -337,7 +335,7 @@ const PlaceTab = ({ match, history }) => {
                     </IonButton>
                     {comments &&
                       comments.docs.map(doc => (
-                        <IonItem key={doc.id}>
+                        <IonItem key={doc.id} lines="none">
                           <p>{doc.data().body}</p>
                         </IonItem>
                       ))}
