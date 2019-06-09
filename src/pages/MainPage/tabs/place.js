@@ -3,8 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { useCollection } from 'react-firebase-hooks/firestore';
 
-import { Plugins, CameraResultType, FilesystemDirectory } from '@capacitor/core';
-
 import {
   IonHeader,
   IonToolbar,
@@ -34,8 +32,6 @@ import UserContext from '../../../components/User/context';
 import MapContainer from '../../../components/Map/add';
 
 const PlaceTab = ({ match, history }) => {
-  const { Camera, Filesystem } = Plugins;
-
   const { id } = match.params;
 
   const firebase = useContext(FirebaseContext);

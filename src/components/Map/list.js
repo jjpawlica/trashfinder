@@ -18,7 +18,7 @@ const PlacesMap = ({ google, points, ...other }) => {
 
     setBounds(newBounds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [points]);
 
   return (
     <Map
