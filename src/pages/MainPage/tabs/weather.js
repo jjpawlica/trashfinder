@@ -17,7 +17,8 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonImg
+  IonImg,
+  IonDatetime
 } from '@ionic/react';
 
 const WeatherTab = () => {
@@ -114,12 +115,14 @@ const WeatherTab = () => {
                       <IonLabel>
                         <h1>{temperature} ℃</h1>
                       </IonLabel>
-                      <IonImg
-                        id="weather-icon"
-                        class="weather-icon"
-                        src={`http://openweathermap.org/img/w/${imgURL}.png`}
-                        slot="end"
-                      />
+                      {imgURL && (
+                        <IonImg
+                          id="weather-icon"
+                          class="weather-icon"
+                          src={`http://openweathermap.org/img/w/${imgURL}.png`}
+                          slot="end"
+                        />
+                      )}
                     </IonItem>
                     <IonItem>
                       <IonLabel>
@@ -150,8 +153,7 @@ const WeatherTab = () => {
                     {forecast &&
                       forecast.map(item => (
                         <IonItem key={item.dt}>
-                          <IonLabel>+3h</IonLabel>
-                          <IonText slot="end">{item.main.temp}℃</IonText>
+                          <IonText>{item.main.temp}℃</IonText>
                           <IonImg
                             id="weather-icon"
                             class="weather-icon"
