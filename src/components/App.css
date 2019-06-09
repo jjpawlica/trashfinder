@@ -31,3 +31,8 @@ a:link,
 a:visited {
   text-decoration: none;
 }
+
+
+.weather-icon {
+  width: 60px;
+}
