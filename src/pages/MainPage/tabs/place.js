@@ -15,7 +15,9 @@ import {
   IonCardHeader,
   IonCardContent,
   IonButton,
-  IonLabel
+  IonLabel,
+  IonAvatar,
+  IonThumbnail
 } from '@ionic/react';
 
 import { Marker } from 'google-maps-react';
@@ -24,6 +26,8 @@ import FirebaseContext from '../../../components/Firebase/context';
 import UserContext from '../../../components/User/context';
 
 import MapContainer from '../../../components/Map/add';
+
+import avatar from '../../../images/avatar.svg';
 
 const PlaceTab = ({ match, history }) => {
   const { id } = match.params;
@@ -95,7 +99,7 @@ const PlaceTab = ({ match, history }) => {
                     </IonLabel>
                     {user.uid === createdBy && (
                       <IonButton fill="clear" slot="end">
-                        EDIT
+                        EDYTUJ
                       </IonButton>
                     )}
                   </IonItem>
@@ -104,16 +108,93 @@ const PlaceTab = ({ match, history }) => {
                   <IonList>
                     <IonItem>
                       <p>
-                        Lat: {lat} Lat: {lng}
+                        Szerokośc: {parseFloat(lat).toFixed(4)} Wysokosć:{' '}
+                        {parseFloat(lng).toFixed(4)}
                       </p>
                     </IonItem>
                     <IonItem>
-                      <p>{description}</p>
+                      <p>Opis: {description}</p>
                     </IonItem>
                     <IonItem color="primary">
                       <p>
-                        Created at {createdAt} by {createdByUsername}
+                        Utrzorzone w dniu {createdAt} przez {createdByUsername}
                       </p>
+                    </IonItem>
+                  </IonList>
+                </IonCardContent>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+
+          <IonRow align-items-center justify-content-center>
+            <IonCol size="10">
+              <IonCard>
+                <IonCardHeader>
+                  <IonItem>
+                    <IonLabel>
+                      <h1>Zdjęcia</h1>
+                    </IonLabel>
+                    <IonButton fill="clear" slot="end">
+                      Dodaj zdjęcie
+                    </IonButton>
+                  </IonItem>
+                </IonCardHeader>
+                <IonCardContent>
+                  <IonGrid>
+                    <IonRow>
+                      <IonCol size="4">
+                        <IonThumbnail>
+                          <img
+                            src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                            alt="pic"
+                          />
+                        </IonThumbnail>
+                      </IonCol>
+                      <IonCol size="4">
+                        <IonThumbnail>
+                          <img
+                            src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                            alt="pic"
+                          />
+                        </IonThumbnail>
+                      </IonCol>
+                      <IonCol size="4">
+                        <IonThumbnail>
+                          <img
+                            src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                            alt="pic"
+                          />
+                        </IonThumbnail>
+                      </IonCol>
+                    </IonRow>
+                  </IonGrid>
+                </IonCardContent>
+              </IonCard>
+            </IonCol>
+          </IonRow>
+
+          <IonRow align-items-center justify-content-center>
+            <IonCol size="10">
+              <IonCard>
+                <IonCardHeader>
+                  <IonItem>
+                    <IonLabel>
+                      <IonAvatar style={{ width: '32px', height: '32px' }}>
+                        <img src={user.photoURL || avatar} alt="avatar" />
+                      </IonAvatar>
+                    </IonLabel>
+                    <IonButton fill="clear" slot="end">
+                      DOŁĄCZ DO SPRZĄTANIA
+                    </IonButton>
+                  </IonItem>
+                </IonCardHeader>
+                <IonCardContent>
+                  <IonList>
+                    <IonItem>
+                      <p>Chętynch: 10 osób</p>
+                    </IonItem>
+                    <IonItem>
+                      <p>W dniu: 15.06.2019</p>
                     </IonItem>
                   </IonList>
                 </IonCardContent>
