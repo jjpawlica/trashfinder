@@ -4,6 +4,7 @@
 
 - [Project page](https://bai-uek.github.io/trashfinder/)
 - [Trello boards](https://trello.com/bogateaplikacjeinternetowe2)
+- [Prototype](https://marvelapp.com/4983bj8/screen/57823279)
 
 ## Available Scripts
 
