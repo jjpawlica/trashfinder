@@ -30,7 +30,7 @@ const WeatherTab = () => {
 
 
 
-  const getCurrentWeather = (lat, lon) => {
+  const getCurrentWeather = async (lat, lon) => {
     const apiId = process.env.REACT_APP_WEATHER_API_ID;
 
     let apiUrl = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+apiId+'&units=metric';
@@ -60,30 +60,21 @@ const WeatherTab = () => {
   }
 
 
-  const getForecastWeather = (lat, lon) => {
+  const getForecastWeather = async (lat, lon) => {
     const apiId = process.env.REACT_APP_WEATHER_API_ID;
 
     let apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+apiId+'&units=metric';
+
+    let list = [];
     
-    console.log(apiUrl);
-    fetch(apiUrl)
-    .then(response => {
-      return response.json()
-    })
-    .then(data => {
-      // console.log(data);
-      let list = document.getElementById('forecastList');
-      data.list.forEach(function(item){
-        let el = document.createElement('IonItem');
-        el.innerHTML = '<IonLabel>Test</IonLabel>';
-
-        list.appendChild(el);
-      });
-
-    })
-    .catch(err => {
-      console.log(err)
-    });
+    try {
+        const response = await fetch(apiUrl);
+        const data = response.json();
+        return data.list
+        // console.log(list);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -91,7 +82,7 @@ const WeatherTab = () => {
 
   getCurrentWeather(latitude, longitude);
 
-  getForecastWeather(latitude, longitude);
+  console.log(getForecastWeather(latitude, longitude));
 
 
 
@@ -108,7 +99,7 @@ const WeatherTab = () => {
       <IonGrid>
         <IonRow>
           <IonCol>
-            <IonCardSubtitle>Prognoza pogody dla: <strong id="cityName"></strong></IonCardSubtitle>
+            <IonCardSubtitle>Obecna pogoda w: <strong id="cityName"></strong></IonCardSubtitle>
           </IonCol>
         </IonRow>
         <IonRow>
@@ -132,9 +123,9 @@ const WeatherTab = () => {
 
     <IonList id="forecastList">
       <ion-list-header>
-        <ion-label>Progoda w Krakowie w najbliższym czasie...:</ion-label>
+        <ion-label>Progoda w Krakowie w najbliższym czasie:</ion-label>
       </ion-list-header>
-      {/* <IonItem>
+      <IonItem>
         <IonLabel>12 stopni: </IonLabel>
       </IonItem>
       <IonItem>
@@ -148,7 +139,7 @@ const WeatherTab = () => {
       </IonItem>
       <IonItem>
         <IonLabel>Wrocław</IonLabel>
-      </IonItem>*/}
+      </IonItem>
     </IonList> 
   </>
   );
