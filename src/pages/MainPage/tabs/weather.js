@@ -17,9 +17,10 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonImg,
-  IonDatetime
+  IonImg
 } from '@ionic/react';
+
+const apiID = process.env.REACT_APP_WEATHER_API_ID;
 
 const WeatherTab = () => {
   const { Geolocation } = Plugins;
@@ -33,8 +34,6 @@ const WeatherTab = () => {
   const [forecast, setForecast] = useState();
 
   const [error, setError] = useState();
-
-  const apiID = 'ccca9d21bf598add8f7ed14f2f51a4c1';
 
   // Get current position
   useEffect(() => {
