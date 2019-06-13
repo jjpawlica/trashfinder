@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+
 import React, { useEffect, useState } from 'react';
 
 import { Plugins } from '@capacitor/core';
@@ -33,6 +35,7 @@ const WeatherTab = () => {
 
   const [forecast, setForecast] = useState();
 
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState();
 
   // Get current position
@@ -62,9 +65,8 @@ const WeatherTab = () => {
         setCityName(data.name);
         setTemperature(data.main.temp);
         setImageURL(data.weather[0].icon);
-        console.log(data);
       } catch (err) {
-        console.log(err);
+        setError(err.message);
       }
     };
     if (lat && lng) {
@@ -81,10 +83,9 @@ const WeatherTab = () => {
           `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${apiID}&units=metric`
         );
         const data = await response.json();
-        console.log(data);
         setForecast(data.list);
       } catch (err) {
-        console.log(err);
+        setError(err.message);
       }
     };
     if (lat && lng) {
