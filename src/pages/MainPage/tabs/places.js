@@ -25,7 +25,6 @@ import { Marker } from 'google-maps-react';
 import PlacesMap from '../../../components/Map/list';
 
 import FirebaseContext from '../../../components/Firebase/context';
-import UserContext from '../../../components/User/context';
 
 const PlaceItem = ({ place, id, history }) => {
   const goToLink = async event => {
