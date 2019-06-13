@@ -48,7 +48,6 @@ const SignupPage = ({ history }) => {
         .set({ createAt: firebase.timestamp });
       history.push(ROUTES.LANDING);
     } catch (err) {
-      console.log(err);
       setError(err.message);
     }
   };
