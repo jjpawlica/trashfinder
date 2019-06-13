@@ -15,7 +15,8 @@ import {
   IonLabel,
   IonInput,
   IonTextarea,
-  IonButton
+  IonButton,
+  IonText
 } from '@ionic/react';
 
 import { Marker } from 'google-maps-react';
@@ -117,6 +118,11 @@ const AddPlaceTab = ({ history }) => {
           <IonRow align-items-center justify-content-center>
             <IonCol size="12">
               <IonCard>
+                {error && (
+                  <IonCardHeader color="danger">
+                    <IonLabel>error</IonLabel>
+                  </IonCardHeader>
+                )}
                 <IonCardHeader color="primary">
                   <IonLabel>Dodaj nowe miejsce</IonLabel>
                 </IonCardHeader>
