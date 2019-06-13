@@ -71,8 +71,8 @@ const PlaceItem = ({ place, id, history }) => {
 
 const PlacesTab = ({ history }) => {
   const firebase = useContext(FirebaseContext);
-  const { user } = useContext(UserContext);
 
+  // eslint-disable-next-line no-unused-vars
   const [places, loading, error] = useCollection(
     firebase.db
       .collection('places')
