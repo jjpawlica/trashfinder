@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
@@ -7,7 +8,6 @@ import { IonContent, IonGrid, IonText, IonButton, IonRow, IonCol } from '@ionic/
 import * as ROUTES from '../../constants/routes';
 
 import logo from '../../images/logo.svg';
-
 import startImage from '../../images/start-image.svg';
 
 const LandingPage = ({ history }) => {
