@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useContext, useState } from 'react';
+import { withRouter } from 'react-router';
+
 import {
   IonContent,
   IonGrid,
@@ -12,9 +14,8 @@ import {
   IonButton
 } from '@ionic/react';
 
-import { withRouter } from 'react-router';
-
 import Header from '../../components/Header';
+
 import * as ROUTES from '../../constants/routes';
 
 import FirebaseContext from '../../components/Firebase/context';
