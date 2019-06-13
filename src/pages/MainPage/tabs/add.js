@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React, { useEffect, useState, useContext } from 'react';
 
 import {
@@ -15,8 +17,7 @@ import {
   IonLabel,
   IonInput,
   IonTextarea,
-  IonButton,
-  IonText
+  IonButton
 } from '@ionic/react';
 
 import { Marker } from 'google-maps-react';
