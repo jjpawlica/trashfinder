@@ -47,7 +47,7 @@ const SignupPage = ({ history }) => {
       await firebase.db
         .collection('users')
         .doc(response.user.uid)
-        .set({ createAt: firebase.timestamp });
+        .set({ createdAt: firebase.timestamp });
       history.push(ROUTES.LANDING);
     } catch (err) {
       setError(err.message);

@@ -1,4 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+/* eslint-disable react/prop-types */
+
+import React, { useContext } from 'react';
+
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 import {
   IonHeader,
@@ -12,6 +16,8 @@ import {
   IonAvatar
 } from '@ionic/react';
 
+import numeral from 'numeral';
+
 import FirebaseContext from '../../../components/Firebase/context';
 import UserContext from '../../../components/User/context';
 
@@ -19,27 +25,14 @@ import avatar from '../../../images/avatar.svg';
 
 const ProfileTab = ({ history }) => {
   const firebase = useContext(FirebaseContext);
+
   const { user } = useContext(UserContext);
-  const { email, photoURL } = user;
+  const { uid, email, photoURL } = user;
 
-  const [currentUsername, setCurrentUsername] = useState('');
-
-  // Check if current user has username
-  useEffect(() => {
-    const fetchUsername = async () => {
-      const response = await firebase.db
-        .collection('users')
-        .doc(user.uid)
-        .get();
-
-      const data = response.data();
-      if (data.username) {
-        setCurrentUsername(data.username);
-      }
-    };
-    fetchUsername();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // eslint-disable-next-line no-unused-vars
+  const [profile, loading, error] = useCollection(firebase.db.collection('users').doc(uid), {
+    includeMetadataChanges: true
+  });
 
   const handleSingout = async event => {
     event.preventDefault();
@@ -64,21 +57,23 @@ const ProfileTab = ({ history }) => {
           </IonRow>
           <IonRow align-items-center justify-content-center>
             <IonCol size="3">
-              <p className="text-center">80</p>
+              <p className="text-center">{profile ? profile.data().places : `--`}</p>
               <p className="text-center text-small">Miejsca</p>
             </IonCol>
             <IonCol size="3">
-              <p className="text-center">180</p>
+              <p className="text-center">{profile ? profile.data().points : `--`}</p>
               <p className="text-center text-small">Punkty</p>
             </IonCol>
             <IonCol size="3">
-              <p className="text-center">3.4k</p>
+              <p className="text-center">
+                {profile ? numeral(profile.data().fallowers).format('0.0a') : `--`}
+              </p>
               <p className="text-center text-small">Obserwujący</p>
             </IonCol>
           </IonRow>
           <IonRow justify-content-center>
             <IonCol size="12">
-              {currentUsername && <h1 className="text-center">{currentUsername}</h1>}
+              {profile && <h1 className="text-center">{profile.data().username}</h1>}
               <h4 className="text-center text-bottom-margin">{email}</h4>
             </IonCol>
           </IonRow>

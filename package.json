@@ -9,6 +9,8 @@
     "@ionic/react": "0.0.5",
     "firebase": "^6.1.1",
     "google-maps-react": "^2.0.2",
+    "moment": "^2.24.0",
+    "numeral": "^2.0.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-firebase-hooks": "^2.0.0",
