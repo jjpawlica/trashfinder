@@ -2,11 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 const PlacesMap = ({ google, points, ...other }) => {
-  const mapStyles = {
-    width: '100%',
-    height: '100%'
-  };
-
   const [bounds, setBounds] = useState(null);
 
   // Updates bounds after load
@@ -23,7 +18,6 @@ const PlacesMap = ({ google, points, ...other }) => {
   return (
     <Map
       google={google}
-      style={mapStyles}
       initialCenter={{
         lat: 50.0647,
         lng: 19.945

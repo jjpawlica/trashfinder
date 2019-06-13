@@ -2,14 +2,7 @@ import React from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 const MapContainer = ({ google, zoom, lat, lng, ...other }) => {
-  const mapStyles = {
-    width: '100%',
-    height: '100%'
-  };
-
-  return (
-    <Map google={google} zoom={zoom} style={mapStyles} initialCenter={{ lat, lng }} {...other} />
-  );
+  return <Map google={google} zoom={zoom} initialCenter={{ lat, lng }} {...other} />;
 };
 
 MapContainer.defaultProps = {
