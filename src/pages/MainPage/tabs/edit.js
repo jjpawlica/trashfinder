@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React, { useContext, useEffect, useState } from 'react';
 
 import {
@@ -67,13 +69,11 @@ const ProfileEditTab = ({ history }) => {
       }
     };
 
-    if (username === '') {
-      setInvalid(true);
-      setError(' Nazwa użytownika nie może być pusta');
-    }
-
     if (username !== '') {
       checkUsername();
+    } else {
+      setInvalid(true);
+      setError(' Nazwa użytownika nie może być pusta');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,7 +98,7 @@ const ProfileEditTab = ({ history }) => {
           .doc(currentUsername)
           .delete();
       } catch (err) {
-        console.log(err);
+        setError(err.message);
       }
       history.push('/profile');
     }
