@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+
 import React, { useContext, useEffect, useState } from 'react';
 
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -37,79 +39,40 @@ const PlaceTab = ({ match, history }) => {
   const firebase = useContext(FirebaseContext);
   const { user } = useContext(UserContext);
 
-  const [lat, setLat] = useState();
-  const [lng, setLng] = useState();
-  const [name, setName] = useState('');
-  const [description, setDescritpion] = useState('');
-  const [status, setStatus] = useState(false);
-  const [createdAt, setCreatedAt] = useState('');
-  const [createdBy, setCreatedBy] = useState('');
-  const [createdByUsername, setCreatedByUsername] = useState('');
-  const [users, setUsers] = useState([]);
-  const [usersCount, setUsersCount] = useState(0);
-
-  const [canJoin, setCanJoin] = useState(false);
-  const [cleaningDate, setCleaningDate] = useState();
+  const [error, setError] = useState('');
 
   const [comment, setComment] = useState('');
 
-  const [comments, loading, error] = useCollection(
+  const [comments, loadingComments, errorComments] = useCollection(
     firebase.db.collection('comments').where('place', '==', id),
     {
       includeMetadataChanges: true
     }
   );
 
-  // Check if place exists
-  useEffect(() => {
-    const fetchPlace = async () => {
-      const placeRef = await firebase.db
-        .collection('places')
-        .doc(id)
-        .get();
+  const [place, loadingPlace, errorPlace] = useCollection(
+    firebase.db.collection('places').doc(id),
+    {
+      includeMetadataChanges: true
+    }
+  );
 
-      if (placeRef.exists) {
-        const place = placeRef.data();
-        setLat(place.location.latitude);
-        setLng(place.location.longitude);
-        setName(place.name);
-        setDescritpion(place.description);
-        setStatus(place.status);
-        setUsers(place.users);
-        setUsersCount(place.users.length);
-        setCreatedAt(place.createdAt.toDate().toISOString());
+  const [profile, loadingProfile, errorProfile] = useCollection(
+    firebase.db.collection('users').doc(user.uid),
+    {
+      includeMetadataChanges: true
+    }
+  );
 
-        if (place.cleaningDate) {
-          setCleaningDate(place.cleaningDate.toDate().toISOString());
-        }
-
-        const userRef = await firebase.db
-          .collection('users')
-          .doc(place.user)
-          .get();
-        setCreatedBy(userRef.id);
-        setCreatedByUsername(userRef.data().username);
-
-        setCanJoin(place.users.includes(user.uid));
-      } else {
-        history.push('/places');
-      }
-    };
-    fetchPlace();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleChanceStatus = async event => {
+  const handleChangeStatus = async event => {
     event.preventDefault();
     try {
       await firebase.db
         .collection('places')
         .doc(id)
-        .update({ status: !status });
-
-      setStatus(!status);
+        .update({ status: !place.data().status });
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
@@ -120,11 +83,8 @@ const PlaceTab = ({ match, history }) => {
         .collection('places')
         .doc(id)
         .update({ users: firebase.arrayUnion(user.uid) });
-
-      setCanJoin(!canJoin);
-      setUsersCount(usersCount + 1);
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
@@ -135,11 +95,8 @@ const PlaceTab = ({ match, history }) => {
         .collection('places')
         .doc(id)
         .update({ users: firebase.arrayRemove(user.uid) });
-
-      setCanJoin(!canJoin);
-      setUsersCount(usersCount - 1);
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
@@ -150,10 +107,8 @@ const PlaceTab = ({ match, history }) => {
         .collection('places')
         .doc(id)
         .update({ cleaningDate: firebase.Timestamp.fromDate(new Date(dateToUpdate)) });
-
-      setCleaningDate(dateToUpdate);
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
@@ -164,11 +119,11 @@ const PlaceTab = ({ match, history }) => {
         body: comment,
         place: id,
         createdAt: firebase.timestamp,
-        createdBy: user.uid
+        createdBy: profile.data().username
       });
       setComment('');
     } catch (err) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
@@ -176,176 +131,168 @@ const PlaceTab = ({ match, history }) => {
     <>
       <IonHeader>
         <IonToolbar color="primary">
-          <IonTitle>Miejsce: {name}</IonTitle>
+          <IonTitle>{place ? `Miejsce: ${place.data().name}` : `Miejsce`}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonGrid fixed>
-          <IonRow align-items-center justify-content-center>
-            <IonCol size="11" style={{ height: '50vh' }}>
-              <MapContainer lat={lat} lng={lng} center={{ lat, lng }}>
-                <Marker position={{ lat, lng }} />
-              </MapContainer>
-            </IonCol>
-          </IonRow>
-          <IonRow align-items-center justify-content-center>
-            <IonCol size="12">
-              <IonCard>
-                <IonCardHeader color="primary">
-                  <IonLabel>Nazwa: {name}</IonLabel>
-                </IonCardHeader>
-                <IonCardContent>
-                  <IonList>
-                    <IonItem>
-                      <IonLabel>Opis: {description}</IonLabel>
-                    </IonItem>
-                    <IonItem>
-                      <IonLabel>Szerokośc: {parseFloat(lat).toFixed(4)}</IonLabel>
-                    </IonItem>
-                    <IonItem>
-                      <IonLabel>Wysokosć: {parseFloat(lng).toFixed(4)}</IonLabel>
-                    </IonItem>
+      {place && (
+        <IonContent fullscreen>
+          <IonGrid fixed>
+            <IonRow align-items-center justify-content-center>
+              <IonCol size="11" style={{ height: '50vh' }}>
+                <MapContainer
+                  lat={place.data().location.latitude}
+                  lng={place.data().location.longitude}
+                  center={{
+                    lat: place.data().location.latitude,
+                    lng: place.data().location.longitude
+                  }}
+                >
+                  <Marker
+                    position={{
+                      lat: place.data().location.latitude,
+                      lng: place.data().location.longitude
+                    }}
+                  />
+                </MapContainer>
+              </IonCol>
+            </IonRow>
+            <IonRow align-items-center justify-content-center>
+              <IonCol size="12">
+                <IonCard>
+                  <IonCardHeader color="primary">
+                    <IonLabel>Nazwa: {place.data().name}</IonLabel>
+                  </IonCardHeader>
+                  <IonCardContent>
+                    <IonList>
+                      <IonItem>
+                        <IonLabel>Opis: {place.data().description}</IonLabel>
+                      </IonItem>
+                      <IonItem>
+                        <IonLabel>
+                          Szerokośc: {parseFloat(place.data().location.latitude).toFixed(4)}
+                        </IonLabel>
+                      </IonItem>
+                      <IonItem>
+                        <IonLabel>
+                          Wysokosć: {parseFloat(place.data().location.longitude).toFixed(4)}
+                        </IonLabel>
+                      </IonItem>
+                      <IonItem>
+                        {place.data().status ? (
+                          <IonLabel color="success">posprzątane</IonLabel>
+                        ) : (
+                          <IonLabel color="danger"> nie posprzątane</IonLabel>
+                        )}
+                        {user.uid === place.data().user && (
+                          <IonButton fill="clear" slot="end" onClick={handleChangeStatus}>
+                            ZMIEŃ
+                          </IonButton>
+                        )}
+                      </IonItem>
+                      <IonItem>
+                        <IonLabel>Stworzono</IonLabel>
+                        <IonDatetime
+                          displayFormat="MMM DD, YYYY"
+                          slot="end"
+                          value={place
+                            .data()
+                            .createdAt.toDate()
+                            .toISOString()}
+                          readonly
+                        />
+                      </IonItem>
+                    </IonList>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+            </IonRow>
 
-                    <IonItem>
-                      {status ? (
-                        <IonLabel color="success">posprzątane</IonLabel>
+            <IonRow align-items-center justify-content-center>
+              <IonCol size="12">
+                <IonCard>
+                  <IonCardHeader color="primary">
+                    <IonItem lines="none" color="primary">
+                      <IonLabel>Sprzątanie</IonLabel>
+                      {place.data().users.includes(user.uid) ? (
+                        <IonButton slot="end" color="danger" onClick={handleEventQuit}>
+                          ZREZYGNUJ
+                        </IonButton>
                       ) : (
-                        <IonLabel color="danger"> nie posprzątane</IonLabel>
-                      )}
-                      {user.uid === createdBy && (
-                        <IonButton fill="clear" slot="end" onClick={handleChanceStatus}>
-                          ZMIEŃ
+                        <IonButton slot="end" color="success" onClick={handleEventJoin}>
+                          DOŁĄCZ
                         </IonButton>
                       )}
                     </IonItem>
-                    <IonItem>
-                      <IonLabel>Stworzono</IonLabel>
-                      <IonDatetime
-                        displayFormat="MMM DD, YYYY"
-                        slot="end"
-                        value={createdAt}
-                        readonly
-                      />
-                    </IonItem>
-                    <IonItem>
-                      <IonLabel>Przez</IonLabel>
-                      <IonText slot="end">{createdByUsername}</IonText>
-                    </IonItem>
-                  </IonList>
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
+                  </IonCardHeader>
+                  <IonCardContent>
+                    <IonList>
+                      <IonItem>
+                        <IonLabel>Chętynch: </IonLabel>
+                        <IonText slot="end">{place.data().users.length}</IonText>
+                      </IonItem>
+                      <IonItem>
+                        <IonLabel>{place.data().cleaningDate ? 'W dniu' : 'Dodaj datę'}</IonLabel>
+                        <IonDatetime
+                          displayFormat="MMM DD, YYYY HH:mm"
+                          pickerFormat="MMM DD YYYY HH:mm"
+                          slot="end"
+                          value={
+                            place.data().cleaningDate
+                              ? place
+                                  .data()
+                                  .cleaningDate.toDate()
+                                  .toISOString()
+                              : ''
+                          }
+                          onIonChange={handleDateChange}
+                        />
+                      </IonItem>
+                    </IonList>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+            </IonRow>
 
-          <IonRow align-items-center justify-content-center>
-            <IonCol size="12">
-              <IonCard>
-                <IonCardHeader>
-                  <IonItem>
-                    <IonLabel>Zdjęcia</IonLabel>
-                    <IonButton fill="clear" slot="end" onClick={() => console.log('ADD PHOTO')}>
-                      Dodaj zdjęcie
-                    </IonButton>
-                  </IonItem>
-                </IonCardHeader>
-                <IonCardContent>
-                  <IonGrid>
-                    <IonRow>
-                      <IonCol size="4">
-                        <IonThumbnail>
-                          <img
-                            src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-                            alt="thumb"
-                          />
-                        </IonThumbnail>
-                      </IonCol>
-                    </IonRow>
-                  </IonGrid>
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-
-          <IonRow align-items-center justify-content-center>
-            <IonCol size="12">
-              <IonCard>
-                <IonCardHeader>
-                  <IonItem>
-                    <IonLabel>Sprzątanie</IonLabel>
-                    {canJoin ? (
-                      <IonButton fill="clear" slot="end" color="danger" onClick={handleEventQuit}>
-                        ZREZYGNUJ
+            <IonRow align-items-center justify-content-center>
+              <IonCol size="12">
+                <IonCard>
+                  <IonCardHeader color="primary">
+                    <IonLabel>Komentarze ({comments && comments.docs.length})</IonLabel>
+                  </IonCardHeader>
+                  <IonCardContent>
+                    <IonList>
+                      <IonItem>
+                        <IonTextarea
+                          required
+                          placeholder="Dodaj komentarz"
+                          name="comment"
+                          maxlength="200"
+                          value={comment}
+                          onIonChange={e => setComment(e.currentTarget.value)}
+                        />
+                      </IonItem>
+                      <IonButton
+                        style={{ marginTop: '32px' }}
+                        expand="block"
+                        onClick={handleAddComment}
+                      >
+                        Dodaj komentarz
                       </IonButton>
-                    ) : (
-                      <IonButton fill="clear" slot="end" color="success" onClick={handleEventJoin}>
-                        DOŁĄCZ
-                      </IonButton>
-                    )}
-                  </IonItem>
-                </IonCardHeader>
-                <IonCardContent>
-                  <IonList>
-                    <IonItem>
-                      <IonLabel>Chętynch: {usersCount}</IonLabel>
-                    </IonItem>
-                    <IonItem>
-                      <IonLabel>{cleaningDate ? 'W dniu' : 'Dodaj datę'}</IonLabel>
-                      <IonDatetime
-                        displayFormat="MMM DD, YYYY HH:mm"
-                        pickerFormat="MMM DD YYYY HH:mm"
-                        slot="end"
-                        value={cleaningDate}
-                        onIonChange={handleDateChange}
-                      />
-                    </IonItem>
-                  </IonList>
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-
-          <IonRow align-items-center justify-content-center>
-            <IonCol size="12">
-              <IonCard>
-                <IonCardHeader>
-                  <IonItem>
-                    <IonLabel>
-                      <h1>Komentarze ({comments && comments.docs.length})</h1>
-                    </IonLabel>
-                  </IonItem>
-                </IonCardHeader>
-                <IonCardContent>
-                  <IonList>
-                    <IonItem>
-                      <IonTextarea
-                        required
-                        placeholder="Dodaj komentarz"
-                        name="comment"
-                        maxlength="200"
-                        value={comment}
-                        onIonChange={e => setComment(e.currentTarget.value)}
-                      />
-                    </IonItem>
-                    <IonButton
-                      style={{ marginTop: '32px' }}
-                      expand="block"
-                      onClick={handleAddComment}
-                    >
-                      Dodaj komentarz
-                    </IonButton>
-                    {comments &&
-                      comments.docs.map(doc => (
-                        <IonItem key={doc.id} lines="none">
-                          <p>{doc.data().body}</p>
-                        </IonItem>
-                      ))}
-                  </IonList>
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonContent>
+                      {comments &&
+                        comments.docs.map(doc => (
+                          <IonItem key={doc.id} lines="none">
+                            <IonText>{doc.data().body}</IonText>
+                            <IonText slot="end">{doc.data().createdBy}</IonText>
+                          </IonItem>
+                        ))}
+                    </IonList>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        </IonContent>
+      )}
     </>
   );
 };
